@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -27,6 +28,10 @@ public class Issue {
     @Column(name = "description")
     private String description;
 
+    @Setter
+    @Column(name = "writer")
+    private String writer;
+
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -38,10 +43,11 @@ public class Issue {
     private String status;
 
     @Builder
-    public Issue(Integer projectId, String title, String description, LocalDateTime createdAt, Integer priority, String status){
+    public Issue(Integer projectId, String title, String description, String writer, LocalDateTime createdAt, Integer priority, String status){
         this.projectId = projectId;
         this.title = title;
         this.description = description;
+        this.writer = writer;
         this.createdAt = createdAt != null ? createdAt : LocalDateTime.now();
         this.priority = priority;
         this.status = status;
@@ -50,5 +56,4 @@ public class Issue {
     public void update(String status){
         this.status = status;
     }
-
 }
