@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import jjapra.app.service.JJapraService;
+import jjapra.app.service.IssueService;
 
 // 로그인 컨트롤러
 @RequiredArgsConstructor
@@ -19,20 +19,6 @@ import jjapra.app.service.JJapraService;
 public class LoginController {
 
     private final MemberRepository memberRepository;
-    private final JJapraService jJapraService;
-
-
-    //Create issue endpoint
-    @PostMapping("/api/issues")
-    public ResponseEntity<Issue> addIssue(@ModelAttribute AddIssueRequest request, HttpSession session){
-        Member loggedInUser = (Member) session.getAttribute("loggedInUser");
-        request.setWriter(loggedInUser.getId());
-
-        Issue savedIssue = jJapraService.save(request);
-        System.out.println("Created");
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(savedIssue);
-    }
 
     //login check api
     @PostMapping("/login")

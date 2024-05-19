@@ -5,13 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0386919d-836a-4b5c-8658-9847a3e7c89d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/controller/ProjectController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/dto/AddProjectRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/model/Project.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/repository/ProjectRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/service/ProjectService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/project.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/controller/IssueController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/dto/IssueListResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/issueDetails.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/issueList.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/controller/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/model/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/model/Comment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/model/Issue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/model/Issue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/repository/CommentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/repository/CommentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/repository/IssueRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/repository/IssueRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/repository/MemberRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/repository/MemberRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/repository/ProjectRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/repository/ProjectRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/service/JJapraService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/service/IssueService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/data.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/success.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/success.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,8 +29,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Class" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -30,9 +38,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 7
-}</component>
+        &quot;customColor&quot;: &quot;&quot;,
+        &quot;associatedIndex&quot;: 7
+        }</component>
   <component name="ProjectId" id="2gRPxQmRu9aPnZ9FP7jyoOztrPB" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -52,7 +60,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.jjapraApplication.executor": "Run",
-    "git-widget-placeholder": "project__dev",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/kmgdd/Documents/2024-1/소프트웨어공학/pp/JJAPRA_Back/jjapra/src/main/resources/templates",
@@ -145,7 +153,9 @@
       <workItem from="1715662799585" duration="363000" />
       <workItem from="1715663226702" duration="14581000" />
       <workItem from="1715746523490" duration="12977000" />
-      <workItem from="1715922373912" duration="22470000" />
+      <workItem from="1715922373912" duration="30705000" />
+      <workItem from="1716048060015" duration="236000" />
+      <workItem from="1716054354091" duration="142000" />
     </task>
     <servers />
   </component>

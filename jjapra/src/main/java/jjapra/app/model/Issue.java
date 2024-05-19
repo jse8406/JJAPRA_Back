@@ -53,6 +53,12 @@ public class Issue {
         this.status = status;
     }
 
+    @PrePersist
+    public void prePersist() {
+        if (this.status == null) {
+            this.status = "new";
+        }
+    }
     public void update(String status){
         this.status = status;
     }
