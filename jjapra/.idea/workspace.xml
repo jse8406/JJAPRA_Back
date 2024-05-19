@@ -5,12 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0386919d-836a-4b5c-8658-9847a3e7c89d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/controller/ProjectController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/dto/AddProjectRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/model/Project.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/repository/ProjectRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/service/ProjectService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/project.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/controller/JoinController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/dto/AddMemberRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/service/MemberService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/join.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,7 +50,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.jjapraApplication.executor": "Run",
-    "git-widget-placeholder": "project__dev",
+    "git-widget-placeholder": "DDing",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/kmgdd/Documents/2024-1/소프트웨어공학/pp/JJAPRA_Back/jjapra/src/main/resources/templates",
@@ -83,8 +81,9 @@
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="jjapra.app.service" />
-      <recent name="jjapra.app.repository" />
       <recent name="jjapra.app.dto" />
+      <recent name="jjapra.app.controller" />
+      <recent name="jjapra.app.repository" />
       <recent name="jjapra.app.model" />
     </key>
   </component>
