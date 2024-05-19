@@ -5,18 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0386919d-836a-4b5c-8658-9847a3e7c89d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/model/Comment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/repository/CommentRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/controller/ProjectController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/dto/AddProjectRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/model/Project.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/repository/ProjectRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/service/ProjectService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/project.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/dto/AddIssueRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/dto/AddIssueRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/model/Issue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/model/Issue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/model/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/model/Member.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/repository/MemberRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/repository/MemberRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/data.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/success.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/success.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,9 +52,10 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.jjapraApplication.executor": "Run",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "project__dev",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/kmgdd/Documents/2024-1/소프트웨어공학/pp/JJAPRA_Back/jjapra/src/main/resources/templates",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -78,12 +74,34 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\kmgdd\Documents\2024-1\소프트웨어공학\pp\JJAPRA_Back\jjapra\src\main\resources\templates" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\seung\IdeaProjects\JJAPRA_Back\jjapra\src\main\resources\templates" />
       <recent name="C:\Users\seung\IdeaProjects\JJAPRA_Back\jjapra\src\main\resources" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="jjapra.app.service" />
+      <recent name="jjapra.app.repository" />
+      <recent name="jjapra.app.dto" />
+      <recent name="jjapra.app.model" />
+    </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.jjapraApplication">
+    <configuration name="jjapraApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="jjapra.app.jjapraApplication" />
+      <module name="jjapra" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="jjapra.app.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="jjapraApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="jjapra" />
@@ -100,15 +118,14 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.jjapraApplication" />
+        <item itemvalue="Application.jjapraApplication" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-19.0.2-corretto-19.0.2-f644763e9732-1e16d6ec" />
-        <option value="jdk-22-openjdk-22-4caba194b151-f504ca98" />
+        <option value="jdk-19.0.2-corretto-19.0.2-4caba194b151-48ba4555" />
       </set>
     </attachedChunks>
   </component>
