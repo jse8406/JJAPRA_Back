@@ -15,13 +15,14 @@ import lombok.Setter;
 @Getter
 public class AddProjectMemberRequest {
     private String memberId;
-    private String role;
+    private Role role;
 
     public ProjectMember toEntity(Project project, Member member) {
+        System.out.println("ProjectMember.toEntity@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         return ProjectMember.builder()
                 .project(project)
                 .member(member)
-                .role(Role.valueOf(role))
+                .role(role)
                 .build();
     }
 }
