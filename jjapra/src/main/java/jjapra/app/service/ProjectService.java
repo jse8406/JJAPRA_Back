@@ -15,8 +15,7 @@ public class ProjectService {
     public Project save(AddProjectRequest request) {
         return projectRepository.save(request.toEntity());
     }
-
-    public Project findById(String id) {
+    public Project findById(Integer id) {
         return projectRepository.findById(id).orElse(null);
     }
 

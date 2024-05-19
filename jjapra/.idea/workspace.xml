@@ -5,11 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0386919d-836a-4b5c-8658-9847a3e7c89d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/controller/JoinController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/dto/AddMemberRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/service/MemberService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/join.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/controller/MemberController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/controller/MemberController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/controller/ProjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/controller/ProjectController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/controller/ProjectMemberController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/controller/ProjectMemberController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/dto/AddProjectMemberRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/dto/AddProjectMemberRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/model/ProjectMember.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/model/ProjectMember.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/model/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/model/Role.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/repository/ProjectMemberRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/repository/ProjectMemberRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/repository/ProjectRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/repository/ProjectRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/service/ProjectMemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/service/ProjectMemberService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/service/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/service/ProjectService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +28,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
+        <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -72,6 +82,9 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="jjapra.app.model" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\kmgdd\Documents\2024-1\소프트웨어공학\pp\JJAPRA_Back\jjapra\src\main\resources\templates" />
     </key>
