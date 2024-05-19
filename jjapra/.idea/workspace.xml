@@ -6,8 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="0386919d-836a-4b5c-8658-9847a3e7c89d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/controller/JoinController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/controller/JoinController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/controller/MemberController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/controller/MemberController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/model/ProjectMember.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/model/ProjectMember.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/service/ProjectMemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/service/ProjectMemberService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -1,5 +1,6 @@
 package jjapra.app.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,6 +27,5 @@ public class ProjectMember {
     private Member member;
 
     @Enumerated(EnumType.STRING)
-//    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Role role;
 }

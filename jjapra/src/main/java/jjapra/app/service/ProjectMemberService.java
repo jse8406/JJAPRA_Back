@@ -8,6 +8,7 @@ import jjapra.app.repository.MemberRepository;
 import jjapra.app.repository.ProjectMemberRepository;
 import jjapra.app.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
