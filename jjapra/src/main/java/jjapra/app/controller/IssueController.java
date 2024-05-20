@@ -21,7 +21,7 @@ import java.util.List;
 public class IssueController {
     private final IssueService issueService;
 
-    @PostMapping("/saveIssues")
+    @PostMapping("/issues")
     public ResponseEntity<Issue> addIssue(@ModelAttribute AddIssueRequest request, HttpSession session){
         Member loggedInUser = (Member) session.getAttribute("loggedInUser");
         request.setWriter(loggedInUser.getId());
@@ -41,7 +41,7 @@ public class IssueController {
         return "issueList";
     }
 
-    @GetMapping("/issue/details/{id}")
+    @GetMapping("/issues/details/{id}")
     public String getIssueDetails(@PathVariable("id") Integer id, Model model) {
         Issue issue = issueService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid issue Id:" + id));
@@ -50,7 +50,7 @@ public class IssueController {
         model.addAttribute("comments", comments);
         return "issueDetails"; // issueDetails.html 템플릿으로 렌더링
     }
-    @PostMapping("/issue/details/{id}/addComment")
+    @PostMapping("/issues/details/{id}/addComment")
     public String addComment(@PathVariable("id") Integer id,
                              @RequestParam String content,
                              HttpSession session) {

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProjectMemberController {
     private final ProjectMemberService projectMemberService;
 
-    @RequestMapping(value = "/project/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/projects/{id}", method = RequestMethod.POST)
     public ProjectMember save(@PathVariable("id") Integer id, @RequestBody AddProjectMemberRequest request) {
         Project project = projectMemberService.findProjectById(id);
         if (project == null) {

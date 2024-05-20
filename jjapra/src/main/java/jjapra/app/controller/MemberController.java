@@ -57,7 +57,7 @@ public class MemberController {
     }
 
     // 회원 정보 조회. 회원 ID를 받아서 해당 회원의 정보를 반환
-    @RequestMapping(value = "/member/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/members/{id}", method = RequestMethod.GET)
     public Member getMember(@PathVariable("id") String id) {
         return memberService.findById(id);
     }

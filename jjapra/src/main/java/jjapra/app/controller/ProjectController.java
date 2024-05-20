@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/project")
+@RequestMapping(value = "/projects")
 public class ProjectController {
 
     private final ProjectService projectService;
 
-    @RequestMapping(value = "/")
+    @RequestMapping(value = "")
     public String displayProjectCreatePage(){return "project.html";}
 
-    @PostMapping(value = "/")
+    @PostMapping(value = "")
     public ResponseEntity<Project> addProject(@RequestBody AddProjectRequest request) {
         if (request.getTitle().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
