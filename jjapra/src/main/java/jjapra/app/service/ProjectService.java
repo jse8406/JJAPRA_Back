@@ -6,11 +6,17 @@ import jjapra.app.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
+
+    public List<Project> findAll() {
+        return projectRepository.findAll();
+    }
 
     public Project save(AddProjectRequest request) {
         return projectRepository.save(request.toEntity());

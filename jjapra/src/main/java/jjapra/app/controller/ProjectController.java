@@ -3,11 +3,14 @@ package jjapra.app.controller;
 import jjapra.app.dto.AddProjectRequest;
 import jjapra.app.model.Project;
 import jjapra.app.service.ProjectService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -17,7 +20,9 @@ public class ProjectController {
     private final ProjectService projectService;
 
     @GetMapping("")
-    public String displayProjectCreatePage(){return "project.html";}
+    public List<Project> getProjects() {
+        return projectService.findAll();
+    }
 
     @PostMapping("")
     public ResponseEntity<Project> addProject(@RequestBody AddProjectRequest request) {

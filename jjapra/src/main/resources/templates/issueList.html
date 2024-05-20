@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -11,7 +11,7 @@
 <h1>Issues</h1>
 <div th:each="item : ${issue}">
     <h5>
-        <a th:href="@{'/issue/details/' + ${item.issueId}}" th:text="${item.title}"></a>
+        <a th:href="@{'/issues/details/' + ${item.issueId}}" th:text="${item.title}"></a>
     </h5>
     <p th:text="${item.writer}"></p>
     <p th:text="${item.issueId}"></p>

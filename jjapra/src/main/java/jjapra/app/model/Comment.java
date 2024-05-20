@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import java.time.LocalDateTime;
 
@@ -18,8 +19,9 @@ public class Comment {
     @Column(name = "commentId", updatable = false)
     private Integer commentId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "issueId")
+    @ManyToOne
+    @JoinColumn(name = "issueId", nullable = false)
+    @JsonBackReference
     private Issue issue;
 
     @Setter

@@ -1,12 +1,12 @@
 package jjapra.app.model;
 
-
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -44,7 +44,9 @@ public class Issue {
     private String status;
 
     @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Comment> comments;
+
     @Builder
     public Issue(Integer projectId, String title, String description, String writer, LocalDateTime createdAt, Integer priority, String status){
         this.projectId = projectId;
@@ -62,6 +64,7 @@ public class Issue {
             this.status = "new";
         }
     }
+
     public void update(String status){
         this.status = status;
     }

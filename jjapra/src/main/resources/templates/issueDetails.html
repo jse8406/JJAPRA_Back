@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Issue Details</title>
@@ -22,7 +22,7 @@
     <hr/>
 </div>
 <h2>Add Comment</h2>
-<form th:action="@{/issue/details/{id}/addComment(id=${issue.issueId})}" method="post">
+<form th:action="@{/issues/details/{id}/addComment(id=${issue.issueId})}" method="post">
     <input type="hidden" th:value="${issue.issueId}" name="issueId"/>
     <label for="content">Content:</label>
     <textarea id="content" name="content" required></textarea>
