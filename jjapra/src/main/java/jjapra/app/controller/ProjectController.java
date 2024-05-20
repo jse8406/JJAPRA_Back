@@ -10,15 +10,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
+@RequestMapping(value = "/project")
 public class ProjectController {
 
     private final ProjectService projectService;
 
-    @RequestMapping(value = "/project")
+    @RequestMapping(value = "/")
     public String displayProjectCreatePage(){return "project.html";}
 
-    @PostMapping(value = "/project/create")
+    @PostMapping(value = "/")
     public ResponseEntity<Project> addProject(@RequestBody AddProjectRequest request) {
         if (request.getTitle().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -32,8 +33,8 @@ public class ProjectController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedProject);
     }
 
-    @RequestMapping(value = "/project/:id")
-    public ResponseEntity<Project> getProject(@PathVariable String id) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Project> getProject(@PathVariable("id") Integer id) {
         Project project = projectService.findById(id);
         if (project == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
