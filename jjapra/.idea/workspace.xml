@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0386919d-836a-4b5c-8658-9847a3e7c89d" name="Changes" comment="">
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/controller/IssueController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/controller/IssueController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/model/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/model/Comment.java" afterDir="false" />
@@ -12,6 +13,9 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/service/IssueService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/service/IssueService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/issueDetails.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/issueDetails.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/success.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/success.html" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/src/main/java/jjapra/app/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jjapra/app/controller/LoginController.java" afterDir="false" />
+>>>>>>> 4ef831e9c9597d1c00b2558d63e7b8c8396e33d7
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,6 +163,7 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
