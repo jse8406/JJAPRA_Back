@@ -7,6 +7,7 @@ import jjapra.app.model.Comment;
 import jjapra.app.model.Issue;
 import jjapra.app.model.Member;
 import jjapra.app.service.IssueService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class IssueController {
     private final IssueService issueService;
 
     @PostMapping("/issues")
-    public ResponseEntity<Issue> addIssue(@ModelAttribute AddIssueRequest request, HttpSession session){
+    public ResponseEntity<Issue> addIssue(@ModelAttribute AddIssueRequest request, HttpSession session) {
         Member loggedInUser = (Member) session.getAttribute("loggedInUser");
         request.setWriter(loggedInUser.getId());
 
@@ -50,6 +51,7 @@ public class IssueController {
         model.addAttribute("comments", comments);
         return "issueDetails"; // issueDetails.html 템플릿으로 렌더링
     }
+
     @PostMapping("/issues/details/{id}/addComment")
     public String addComment(@PathVariable("id") Integer id,
                              @RequestParam String content,
@@ -57,6 +59,11 @@ public class IssueController {
         Member loggedInUser = (Member) session.getAttribute("loggedInUser");
         String writerId = loggedInUser.getId();
         issueService.addComment(id, writerId, content);
-        return "redirect:/issue/details/" + id;
+        return "redirect:/issues/details/" + id;
+    }
+
+    @GetMapping("/projects/{projectId}/issues")
+    public List<Issue> getIssuesByProjectId(@PathVariable("projectId") Integer projectId) {
+        return issueService.findByProjectId(projectId);
     }
 }

@@ -31,6 +31,11 @@ public class IssueService {
     public Optional<Issue> findById(Integer id) {
         return issueRepository.findById(id);
     }
+
+    public List<Issue> findByProjectId(Integer projectId) {
+        return issueRepository.findByProjectId(projectId);
+    }
+
     public List<Comment> findCommentsByIssueId(Integer issueId) {
         return commentRepository.findByIssue_IssueId(issueId);
     }
