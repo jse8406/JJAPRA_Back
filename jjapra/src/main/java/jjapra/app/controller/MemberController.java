@@ -17,7 +17,7 @@ public class MemberController {
     private final MemberService memberService;
 
     // 회원가입
-    @RequestMapping(value = "/join", method = RequestMethod.POST)
+    @PostMapping("/join")
     public ResponseEntity<Object> displayJoinSuccessPage(@RequestBody AddMemberRequest request) {
         if (request.getId().isEmpty()){
             return ResponseEntity.badRequest().body(null);
@@ -31,7 +31,7 @@ public class MemberController {
     }
 
     // 로그인
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @PostMapping("/login")
     public String login(@RequestBody LoginRequest request, HttpSession session) {
         Member member = memberService.findById(request.getId());
         if (member != null && member.getPassword().equals(request.getPassword())) {
@@ -57,7 +57,7 @@ public class MemberController {
     }
 
     // 회원 정보 조회. 회원 ID를 받아서 해당 회원의 정보를 반환
-    @RequestMapping(value = "/members/{id}", method = RequestMethod.GET)
+    @GetMapping("/members/{id}")
     public Member getMember(@PathVariable("id") String id) {
         return memberService.findById(id);
     }

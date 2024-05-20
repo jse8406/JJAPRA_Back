@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/projects")
+@RequestMapping("/projects")
 public class ProjectController {
 
     private final ProjectService projectService;
 
-    @RequestMapping(value = "")
+    @GetMapping("")
     public String displayProjectCreatePage(){return "project.html";}
 
-    @PostMapping(value = "")
+    @PostMapping("")
     public ResponseEntity<Project> addProject(@RequestBody AddProjectRequest request) {
         if (request.getTitle().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -33,7 +33,7 @@ public class ProjectController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedProject);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping("/{id}")
     public ResponseEntity<Project> getProject(@PathVariable("id") Integer id) {
         Project project = projectService.findById(id);
         if (project == null) {
