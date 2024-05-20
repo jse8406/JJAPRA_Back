@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -42,6 +43,8 @@ public class Issue {
     @Column(name = "status")
     private String status;
 
+    @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments;
     @Builder
     public Issue(Integer projectId, String title, String description, String writer, LocalDateTime createdAt, Integer priority, String status){
         this.projectId = projectId;

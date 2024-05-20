@@ -14,5 +14,19 @@
     <p><strong>Priority:</strong> <span th:text="${issue.priority}"></span></p>
     <p><strong>Status:</strong> <span th:text="${issue.status}"></span></p>
 </div>
+<h2>Comments</h2>
+<div th:each="comment : ${comments}">
+    <p><strong>Writer ID:</strong> <span th:text="${comment.writerId}"></span></p>
+    <p th:text="${comment.content}"></p>
+    <p><strong>Created At:</strong> <span th:text="${comment.createdAt}"></span></p>
+    <hr/>
+</div>
+<h2>Add Comment</h2>
+<form th:action="@{/issue/details/{id}/addComment(id=${issue.issueId})}" method="post">
+    <input type="hidden" th:value="${issue.issueId}" name="issueId"/>
+    <label for="content">Content:</label>
+    <textarea id="content" name="content" required></textarea>
+    <button type="submit">Add Comment</button>
+</form>
 </body>
 </html>

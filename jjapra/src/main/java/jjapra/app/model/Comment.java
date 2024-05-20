@@ -24,7 +24,7 @@ public class Comment {
 
     @Setter
     @Column(name = "writerId")
-    private Integer writerId;
+    private String writerId;
 
     @Setter
     @Column(name = "content", nullable = false)
@@ -35,7 +35,7 @@ public class Comment {
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Builder
-    public Comment(Issue issue, Integer writerId, String content, LocalDateTime createdAt) {
+    public Comment(Issue issue, String writerId, String content, LocalDateTime createdAt) {
         this.issue = issue;
         this.writerId = writerId;
         this.content = content;

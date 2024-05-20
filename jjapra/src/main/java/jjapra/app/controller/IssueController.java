@@ -3,6 +3,7 @@ package jjapra.app.controller;
 import jakarta.servlet.http.HttpSession;
 import jjapra.app.dto.AddIssueRequest;
 import jjapra.app.dto.IssueListResponse;
+import jjapra.app.model.Comment;
 import jjapra.app.model.Issue;
 import jjapra.app.model.Member;
 import jjapra.app.service.IssueService;
@@ -11,10 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,7 +21,7 @@ import java.util.List;
 public class IssueController {
     private final IssueService issueService;
 
-    @PostMapping("/api/issues")
+    @PostMapping("/saveIssues")
     public ResponseEntity<Issue> addIssue(@ModelAttribute AddIssueRequest request, HttpSession session){
         Member loggedInUser = (Member) session.getAttribute("loggedInUser");
         request.setWriter(loggedInUser.getId());
@@ -47,7 +45,18 @@ public class IssueController {
     public String getIssueDetails(@PathVariable("id") Integer id, Model model) {
         Issue issue = issueService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid issue Id:" + id));
-        model.addAttribute("issue", issue);
+        List<Comment> comments = issueService.findCommentsByIssueId(id);
+        model.addAttribute("issue", issue); //thymeleaf에서 해당 model로 item 설정
+        model.addAttribute("comments", comments);
         return "issueDetails"; // issueDetails.html 템플릿으로 렌더링
+    }
+    @PostMapping("/issue/details/{id}/addComment")
+    public String addComment(@PathVariable("id") Integer id,
+                             @RequestParam String content,
+                             HttpSession session) {
+        Member loggedInUser = (Member) session.getAttribute("loggedInUser");
+        String writerId = loggedInUser.getId();
+        issueService.addComment(id, writerId, content);
+        return "redirect:/issue/details/" + id;
     }
 }
