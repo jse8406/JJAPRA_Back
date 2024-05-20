@@ -36,7 +36,6 @@ public class MemberController {
         Member member = memberService.findById(request.getId());
         if (member != null && member.getPassword().equals(request.getPassword())) {
             session.setAttribute("loggedInUser", member);
-            printSession(session);
             return "redirect:/success"; // 로그인 성공 후 메인 페이지로 이동. 현재는 임시로 만들어 놓은 success 페이지로 이동
         } else {
 
@@ -45,16 +44,6 @@ public class MemberController {
     }
 
     // 세션 정보 출력
-    public void printSession(HttpSession session){
-        Member loggedInUser = (Member) session.getAttribute("loggedInUser");
-        if (loggedInUser != null) {
-            // 세션에 사용자가 존재하면, 사용자 ID를 출력
-            System.out.println("Logged in user ID: " + loggedInUser.getId());
-        } else {
-            // 세션에 사용자가 존재하지 않으면, 메시지를 출력
-            System.out.println("No user is logged in.");
-        }
-    }
 
     // 회원 정보 조회. 회원 ID를 받아서 해당 회원의 정보를 반환
     @RequestMapping(value = "/members/{id}", method = RequestMethod.GET)

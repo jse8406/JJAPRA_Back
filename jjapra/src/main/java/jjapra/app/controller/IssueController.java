@@ -50,7 +50,9 @@ public class IssueController {
         model.addAttribute("comments", comments);
         return "issueDetails"; // issueDetails.html 템플릿으로 렌더링
     }
-    @PostMapping("/issues/details/{id}/addComment")
+
+
+    @PostMapping("/issue/details/{id}/addComment")
     public String addComment(@PathVariable("id") Integer id,
                              @RequestParam String content,
                              HttpSession session) {
