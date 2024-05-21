@@ -8,8 +8,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -43,12 +43,15 @@ public class MemberController {
         }
     }
 
-    // 세션 정보 출력
-
     // 회원 정보 조회. 회원 ID를 받아서 해당 회원의 정보를 반환
     @GetMapping("/members/{id}")
     public Member getMember(@PathVariable("id") String id) {
         return memberService.findById(id);
+    }
+
+    @GetMapping("/members")
+    public List<Member> getMembers() {
+        return memberService.findAll();
     }
 }
 

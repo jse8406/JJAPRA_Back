@@ -6,6 +6,8 @@ import jjapra.app.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class MemberService {
@@ -17,5 +19,9 @@ public class MemberService {
 
     public Member findById(String id) {
         return memberRepository.findById(id).orElse(null);
+    }
+
+    public List<Member> findAll() {
+        return memberRepository.findAll();
     }
 }
