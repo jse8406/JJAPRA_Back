@@ -19,7 +19,6 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
-@CrossOrigin(origins = "*")
 public class IssueController {
     private final IssueService issueService;
 
