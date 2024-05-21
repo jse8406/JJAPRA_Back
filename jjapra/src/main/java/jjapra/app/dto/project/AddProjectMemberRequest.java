@@ -1,9 +1,9 @@
-package jjapra.app.dto;
+package jjapra.app.dto.project;
 
-import jjapra.app.model.Member;
-import jjapra.app.model.Project;
-import jjapra.app.model.ProjectMember;
-import jjapra.app.model.Role;
+import jjapra.app.model.member.Member;
+import jjapra.app.model.project.Project;
+import jjapra.app.model.project.ProjectMember;
+import jjapra.app.model.member.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

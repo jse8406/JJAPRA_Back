@@ -1,14 +1,13 @@
 package jjapra.app.service;
 
-import jjapra.app.dto.AddProjectMemberRequest;
-import jjapra.app.model.Member;
-import jjapra.app.model.Project;
-import jjapra.app.model.ProjectMember;
+import jjapra.app.dto.project.AddProjectMemberRequest;
+import jjapra.app.model.member.Member;
+import jjapra.app.model.project.Project;
+import jjapra.app.model.project.ProjectMember;
 import jjapra.app.repository.MemberRepository;
 import jjapra.app.repository.ProjectMemberRepository;
 import jjapra.app.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

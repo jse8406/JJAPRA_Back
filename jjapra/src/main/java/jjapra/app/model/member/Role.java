@@ -1,4 +1,4 @@
-package jjapra.app.model;
+package jjapra.app.model.member;
 
 public enum Role {
     ADMIN,

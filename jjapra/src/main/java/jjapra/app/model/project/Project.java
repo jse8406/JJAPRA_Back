@@ -1,4 +1,4 @@
-package jjapra.app.model;
+package jjapra.app.model.project;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,6 @@
 package jjapra.app.repository;
 
-import jjapra.app.model.Issue;
+import jjapra.app.model.issue.Issue;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

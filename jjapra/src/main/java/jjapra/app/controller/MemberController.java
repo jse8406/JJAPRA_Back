@@ -1,8 +1,8 @@
 package jjapra.app.controller;
 
 import jakarta.servlet.http.HttpSession;
-import jjapra.app.dto.AddMemberRequest;
-import jjapra.app.model.Member;
+import jjapra.app.dto.member.AddMemberRequest;
+import jjapra.app.model.member.Member;
 import jjapra.app.service.MemberService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

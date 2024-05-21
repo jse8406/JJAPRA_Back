@@ -1,4 +1,4 @@
-package jjapra.app.model;
+package jjapra.app.model.member;
 
 
 import jakarta.persistence.Column;
@@ -30,6 +30,10 @@ public class Member {
     private String email;
     @Column(nullable = false, length = 30)
     private String phone_num;
+<<<<<<< HEAD:jjapra/src/main/java/jjapra/app/model/Member.java
     @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean is_admin;
+=======
+
+>>>>>>> main:jjapra/src/main/java/jjapra/app/model/member/Member.java
 }

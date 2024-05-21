@@ -1,7 +1,7 @@
 package jjapra.app.service;
 
-import jjapra.app.dto.AddMemberRequest;
-import jjapra.app.model.Member;
+import jjapra.app.dto.member.AddMemberRequest;
+import jjapra.app.model.member.Member;
 import jjapra.app.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,9 @@
-package jjapra.app.dto;
+package jjapra.app.dto.issue;
 
 
-import jjapra.app.model.Issue;
+import jjapra.app.model.issue.Issue;
+import jjapra.app.model.issue.Priority;
+import jjapra.app.model.issue.Status;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -13,7 +15,8 @@ public class IssueListResponse {
     private String description;
     private String writer;
     private LocalDateTime createdAt;
-    private String status;
+    private Priority priority;
+    private Status status;
 
     public IssueListResponse(Issue issue){
         this.issueId = issue.getIssueId();
@@ -21,6 +24,7 @@ public class IssueListResponse {
         this.description = issue.getDescription();
         this.writer = issue.getWriter();
         this.createdAt = issue.getCreatedAt();
+        this.priority = issue.getPriority();
         this.status = issue.getStatus();
     }
 

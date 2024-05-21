@@ -1,7 +1,7 @@
-package jjapra.app.dto;
+package jjapra.app.dto.issue;
 
-import jjapra.app.model.Comment;
-import jjapra.app.model.Issue;
+import jjapra.app.model.issue.Comment;
+import jjapra.app.model.issue.Issue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
