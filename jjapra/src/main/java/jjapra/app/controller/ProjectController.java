@@ -26,8 +26,14 @@ public class ProjectController {
     private final ProjectMemberService projectMemberService;
 
     @GetMapping("")
-    public List<Project> getProjects() {
-        return projectService.findAll();
+    public ResponseEntity<List<ProjectMember>> getProjects(HttpSession session) {
+        Object loggedInUser = session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        List<ProjectMember> projects = projectMemberService.findByMemberId(((Member) loggedInUser).getId());
+        return ResponseEntity.status(HttpStatus.OK).body(projects);
     }
 
     @PostMapping("")
