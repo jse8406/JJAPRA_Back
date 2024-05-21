@@ -38,9 +38,6 @@ public class IssueController {
     @GetMapping("/issues")
     public ResponseEntity<List<Issue>> getIssues(HttpSession session) {
         Member loggedInUser = (Member) session.getAttribute("loggedInUser");
-        if (loggedInUser == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
         List<ProjectMember> projectMemberList = projectMemberService.findByMemberId(loggedInUser.getId());
         List<Integer> projectIds = projectMemberList.stream()
                 .map(pm -> pm.getProject().getId())
