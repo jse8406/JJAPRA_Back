@@ -29,4 +29,8 @@ public class ProjectMemberService {
     public ProjectMember save(AddProjectMemberRequest request, Project project, Member member) {
         return projectMemberRepository.save(request.toEntity(project, member));
     }
+
+    public ProjectMember save(ProjectMember projectMember) {
+        return projectMemberRepository.save(projectMember);
+    }
 }

@@ -4,6 +4,7 @@ import jjapra.app.dto.AddProjectRequest;
 import jjapra.app.model.Project;
 import jjapra.app.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,5 +38,14 @@ public class ProjectService {
         project.setTitle(request.getTitle());
         project.setDescription(request.getDescription());
         return project;
+    }
+
+    public ResponseEntity<Project> deleteProject(Integer id) {
+        Project project = projectRepository.findById(id).orElse(null);
+        if (project == null) {
+            return ResponseEntity.notFound().build();
+        }
+        projectRepository.delete(project);
+        return ResponseEntity.ok().build();
     }
 }

@@ -4,7 +4,6 @@ import jakarta.servlet.http.HttpSession;
 import jjapra.app.dto.AddCommentRequest;
 import jjapra.app.dto.AddIssueRequest;
 import jjapra.app.dto.IssueDetailsResponse;
-import jjapra.app.dto.IssueListResponse;
 import jjapra.app.model.Comment;
 import jjapra.app.model.Issue;
 import jjapra.app.model.Member;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
 public class IssueController {
     private final IssueService issueService;
 
@@ -32,10 +31,8 @@ public class IssueController {
     }
 
     @GetMapping("/issues")
-    public ResponseEntity<List<IssueListResponse>> getIssues() {
-        List<IssueListResponse> issues = issueService.findAll().stream()
-                .map(IssueListResponse::new)
-                .toList();
+    public ResponseEntity<List<Issue>> getIssues() {
+        List<Issue> issues = issueService.findAll();
         return ResponseEntity.status(HttpStatus.OK)
                 .body(issues);
     }

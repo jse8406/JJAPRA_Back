@@ -1,7 +1,12 @@
 package jjapra.app.controller;
 
+import jakarta.servlet.http.HttpSession;
 import jjapra.app.dto.AddProjectRequest;
+import jjapra.app.model.Member;
 import jjapra.app.model.Project;
+import jjapra.app.model.ProjectMember;
+import jjapra.app.model.Role;
+import jjapra.app.service.ProjectMemberService;
 import jjapra.app.service.ProjectService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +23,7 @@ import java.util.List;
 public class ProjectController {
 
     private final ProjectService projectService;
+    private final ProjectMemberService projectMemberService;
 
     @GetMapping("")
     public List<Project> getProjects() {
@@ -25,7 +31,7 @@ public class ProjectController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Project> addProject(@RequestBody AddProjectRequest request) {
+    public ResponseEntity<Project> addProject(@RequestBody AddProjectRequest request, HttpSession session) {
         if (request.getTitle().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
@@ -34,7 +40,13 @@ public class ProjectController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
         Project savedProject = projectService.save(request);
-        System.out.println("Created");
+        ProjectMember projectMember = ProjectMember.builder()
+                .project(savedProject)
+                .member((Member) session.getAttribute("loggedInUser"))
+                .role(Role.PL)
+                .build();
+        projectMemberService.save(projectMember);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(savedProject);
     }
 
@@ -54,6 +66,11 @@ public class ProjectController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         return ResponseEntity.status(HttpStatus.OK).body(updatedProject);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Project> deleteProject(@PathVariable("id") Integer id) {
+        return projectService.deleteProject(id);
     }
 }
 
