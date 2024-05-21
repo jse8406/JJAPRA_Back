@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class ProjectMemberService {
@@ -32,5 +34,9 @@ public class ProjectMemberService {
 
     public ProjectMember save(ProjectMember projectMember) {
         return projectMemberRepository.save(projectMember);
+    }
+
+    public List<ProjectMember> findByMemberId(String memberId) {
+        return projectMemberRepository.findByMemberId(memberId);
     }
 }
