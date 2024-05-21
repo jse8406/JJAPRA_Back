@@ -7,6 +7,7 @@ import jjapra.app.service.MemberService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -32,14 +33,16 @@ public class MemberController {
 
     // 로그인
     @PostMapping("/login")
-    public String login(@RequestBody LoginRequest request, HttpSession session) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest request, HttpSession session) {
         Member member = memberService.findById(request.getId());
-        if (member != null && member.getPassword().equals(request.getPassword())) {
+        if (member == null) {
+            return ResponseEntity.badRequest().body("아이디 오류");
+        }
+        if (member.getPassword().equals(request.getPassword())) {
             session.setAttribute("loggedInUser", member);
-            return "redirect:/success"; // 로그인 성공 후 메인 페이지로 이동. 현재는 임시로 만들어 놓은 success 페이지로 이동
+            return ResponseEntity.ok().body("로그인 성공");
         } else {
-
-            return "redirect:/"; // 로그인 실패 시 다시 로그인 페이지로 이동
+            return ResponseEntity.badRequest().body("비밀번호 오류");
         }
     }
 
