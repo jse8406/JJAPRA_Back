@@ -1,13 +1,17 @@
 package jjapra.app.controller;
 
 import jakarta.servlet.http.HttpSession;
+
 import jjapra.app.dto.AddCommentRequest;
 import jjapra.app.dto.AddIssueRequest;
 import jjapra.app.dto.IssueDetailsResponse;
 import jjapra.app.model.Comment;
 import jjapra.app.model.Issue;
 import jjapra.app.model.Member;
+import jjapra.app.model.ProjectMember;
+
 import jjapra.app.service.IssueService;
+import jjapra.app.service.ProjectMemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +19,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
 public class IssueController {
     private final IssueService issueService;
+    private final ProjectMemberService projectMemberService;
 
     @PostMapping("/issues")
     public ResponseEntity<Issue> addIssue(@RequestBody AddIssueRequest request, HttpSession session) {
@@ -31,14 +37,28 @@ public class IssueController {
     }
 
     @GetMapping("/issues")
-    public ResponseEntity<List<Issue>> getIssues() {
-        List<Issue> issues = issueService.findAll();
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(issues);
+    public ResponseEntity<List<Issue>> getIssues(HttpSession session) {
+        Member loggedInUser = (Member) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+        List<ProjectMember> projectMemberList = projectMemberService.findByMemberId(loggedInUser.getId());
+        List<Integer> projectIds = projectMemberList.stream()
+                .map(pm -> pm.getProject().getId())
+                .collect(Collectors.toList());
+
+        List<Issue> allIssues = issueService.findAll();
+
+        List<Issue> filteredIssues = allIssues.stream()
+                .filter(issue -> projectIds.contains(issue.getProjectId()))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(filteredIssues);
     }
 
     @GetMapping("/issues/details/{id}")
-    public ResponseEntity<IssueDetailsResponse> getIssueDetails(@PathVariable("id") Integer id) {
+    public ResponseEntity<IssueDetailsResponse> getIssueDetails(@PathVariable("id") Integer id, HttpSession session) {
+
         Issue issue = issueService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid issue Id:" + id));
         List<Comment> comments = issueService.findCommentsByIssueId(id);
