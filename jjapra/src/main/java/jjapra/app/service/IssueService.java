@@ -67,5 +67,11 @@ public class IssueService {
         return issueRepository.save(issue);
     }
 
+    public void deleteIssue(Integer issueId) {
+        Issue issue = issueRepository.findById(issueId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid issue Id:" + issueId));
+        issueRepository.delete(issue);
+    }
+
     
 }

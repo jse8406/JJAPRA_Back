@@ -63,9 +63,16 @@ public class IssueController {
         return issueService.findByProjectId(projectId);
     }
 
+    //issue 수정
     @PatchMapping("/issues/{id}")
     public ResponseEntity<Issue> updateIssue(@PathVariable("id") Integer id, @RequestBody UpdateIssueRequest request) {
         Issue updatedIssue = issueService.updateIssue(id, request);
         return ResponseEntity.ok(updatedIssue);
+    }
+    //issue 삭제
+    @DeleteMapping("/issues/{id}")
+    public ResponseEntity<Void> deleteIssue(@PathVariable("id") Integer id) {
+        issueService.deleteIssue(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
