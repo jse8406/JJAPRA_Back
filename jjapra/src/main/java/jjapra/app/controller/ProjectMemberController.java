@@ -1,12 +1,11 @@
 package jjapra.app.controller;
 
-import jjapra.app.dto.AddProjectMemberRequest;
-import jjapra.app.model.Member;
-import jjapra.app.model.Project;
-import jjapra.app.model.ProjectMember;
+import jjapra.app.dto.project.AddProjectMemberRequest;
+import jjapra.app.model.member.Member;
+import jjapra.app.model.project.Project;
+import jjapra.app.model.project.ProjectMember;
 import jjapra.app.service.ProjectMemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor

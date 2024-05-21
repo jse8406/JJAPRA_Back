@@ -1,4 +1,4 @@
-package jjapra.app.model;
+package jjapra.app.model.issue;
 
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@Setter
 @Getter
 @NoArgsConstructor
 public class Issue {
@@ -37,35 +38,27 @@ public class Issue {
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "priority")
-    private Integer priority;
+    private Priority priority;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private String status;
+    private Status status;
 
     @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Comment> comments;
 
     @Builder
-    public Issue(Integer projectId, String title, String description, String writer, LocalDateTime createdAt, Integer priority, String status){
+    public Issue(Integer projectId, String title, String description, String writer, LocalDateTime createdAt, Priority priority, Status status){
         this.projectId = projectId;
         this.title = title;
         this.description = description;
         this.writer = writer;
         this.createdAt = createdAt != null ? createdAt : LocalDateTime.now();
-        this.priority = priority;
-        this.status = status;
+        this.priority = priority != null ? priority : Priority.MAJOR;
+        this.status = status != null ? status : Status.NEW;
     }
 
-    @PrePersist
-    public void prePersist() {
-        if (this.status == null) {
-            this.status = "new";
-        }
-    }
-
-    public void update(String status){
-        this.status = status;
-    }
 }

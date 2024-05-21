@@ -1,7 +1,7 @@
-package jjapra.app.dto;
+package jjapra.app.dto.member;
 
 
-import jjapra.app.model.Member;
+import jjapra.app.model.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

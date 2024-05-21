@@ -1,17 +1,17 @@
 package jjapra.app.controller;
 
 import jakarta.servlet.http.HttpSession;
-import jjapra.app.dto.AddCommentRequest;
-import jjapra.app.dto.AddIssueRequest;
-import jjapra.app.dto.IssueDetailsResponse;
-import jjapra.app.model.Comment;
-import jjapra.app.model.Issue;
-import jjapra.app.model.Member;
+import jjapra.app.dto.issue.AddCommentRequest;
+import jjapra.app.dto.issue.AddIssueRequest;
+import jjapra.app.dto.issue.IssueDetailsResponse;
+import jjapra.app.dto.issue.UpdateIssueRequest;
+import jjapra.app.model.issue.Comment;
+import jjapra.app.model.issue.Issue;
+import jjapra.app.model.member.Member;
 import jjapra.app.service.IssueService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -61,5 +61,11 @@ public class IssueController {
     @GetMapping("/projects/{projectId}/issues")
     public List<Issue> getIssuesByProjectId(@PathVariable("projectId") Integer projectId) {
         return issueService.findByProjectId(projectId);
+    }
+
+    @PatchMapping("/issues/{id}")
+    public ResponseEntity<Issue> updateIssue(@PathVariable("id") Integer id, @RequestBody UpdateIssueRequest request) {
+        Issue updatedIssue = issueService.updateIssue(id, request);
+        return ResponseEntity.ok(updatedIssue);
     }
 }

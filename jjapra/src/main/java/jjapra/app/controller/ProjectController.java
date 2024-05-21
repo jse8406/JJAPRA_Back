@@ -1,18 +1,16 @@
 package jjapra.app.controller;
 
 import jakarta.servlet.http.HttpSession;
-import jjapra.app.dto.AddProjectRequest;
-import jjapra.app.model.Member;
-import jjapra.app.model.Project;
-import jjapra.app.model.ProjectMember;
-import jjapra.app.model.Role;
+import jjapra.app.dto.project.AddProjectRequest;
+import jjapra.app.model.member.Member;
+import jjapra.app.model.project.Project;
+import jjapra.app.model.project.ProjectMember;
+import jjapra.app.model.member.Role;
 import jjapra.app.service.ProjectMemberService;
 import jjapra.app.service.ProjectService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

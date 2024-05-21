@@ -1,4 +1,4 @@
-package jjapra.app.model;
+package jjapra.app.model.member;
 
 
 import jakarta.persistence.Column;
@@ -31,33 +31,4 @@ public class Member {
     @Column(nullable = false, length = 30)
     private String phone_num;
 
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return List.of(new SimpleGrantedAuthority("user"));
-//    }
-//
-//    @Override
-//    public String getUsername() {
-//        return id;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonLocked() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isCredentialsNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isEnabled() {
-//        return true;
-//    }
 }

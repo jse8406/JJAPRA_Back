@@ -1,8 +1,8 @@
-package jjapra.app.model;
+package jjapra.app.model.project;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import jjapra.app.model.member.Member;
+import jjapra.app.model.member.Role;
 import lombok.*;
 import org.springframework.context.annotation.DependsOn;
 

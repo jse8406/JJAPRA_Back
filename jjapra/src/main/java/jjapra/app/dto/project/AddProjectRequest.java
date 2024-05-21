@@ -1,6 +1,6 @@
-package jjapra.app.dto;
+package jjapra.app.dto.project;
 
-import jjapra.app.model.Project;
+import jjapra.app.model.project.Project;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

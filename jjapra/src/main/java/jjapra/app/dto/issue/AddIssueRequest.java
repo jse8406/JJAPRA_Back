@@ -1,7 +1,9 @@
-package jjapra.app.dto;
+package jjapra.app.dto.issue;
 
 
-import jjapra.app.model.Issue;
+import jjapra.app.model.issue.Issue;
+import jjapra.app.model.issue.Priority;
+import jjapra.app.model.issue.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,8 +21,8 @@ public class AddIssueRequest {
     private String description;
     private String writer;
     private LocalDateTime createdAt;
-    private Integer priority;
-    private String status;
+    private Priority priority;
+    private Status status;
 
     public Issue toEntity(){
         return Issue.builder()

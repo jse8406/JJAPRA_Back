@@ -1,7 +1,7 @@
 package jjapra.app.service;
 
-import jjapra.app.dto.AddProjectRequest;
-import jjapra.app.model.Project;
+import jjapra.app.dto.project.AddProjectRequest;
+import jjapra.app.model.project.Project;
 import jjapra.app.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

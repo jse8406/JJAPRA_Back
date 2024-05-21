@@ -1,6 +1,7 @@
-package jjapra.app.model;
+package jjapra.app.model.issue;
 
 import jakarta.persistence.*;
+import jjapra.app.model.issue.Issue;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
