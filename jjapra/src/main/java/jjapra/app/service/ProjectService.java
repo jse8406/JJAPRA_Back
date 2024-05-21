@@ -28,4 +28,14 @@ public class ProjectService {
     public Project findByTitle(String title) {
         return projectRepository.findByTitle(title).orElse(null);
     }
+
+    public Project update(Integer id, AddProjectRequest request) {
+        Project project = projectRepository.findById(id).orElse(null);
+        if (project == null) {
+            return null;
+        }
+        project.setTitle(request.getTitle());
+        project.setDescription(request.getDescription());
+        return project;
+    }
 }

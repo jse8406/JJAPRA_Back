@@ -46,5 +46,14 @@ public class ProjectController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(project);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Project> updateProject(@PathVariable("id") Integer id, @RequestBody AddProjectRequest request) {
+        Project updatedProject = projectService.update(id, request);
+        if (updatedProject == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(updatedProject);
+    }
 }
 
