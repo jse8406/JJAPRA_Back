@@ -85,7 +85,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>io.home.test.Test</mainClass>
+                            <mainClass>jjapra.app.JjapraApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
