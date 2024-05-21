@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin(origins = "*")
 public class ProjectMemberController {
     private final ProjectMemberService projectMemberService;
 
