@@ -24,13 +24,14 @@ public class ProjectController {
     private final ProjectMemberService projectMemberService;
 
     @GetMapping("")
-    public ResponseEntity<List<ProjectMember>> getProjects(HttpSession session) {
-        Object loggedInUser = session.getAttribute("loggedInUser");
-        if (loggedInUser == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
-
-        List<ProjectMember> projects = projectMemberService.findByMemberId(((Member) loggedInUser).getId());
+    public ResponseEntity<List<Project>> getProjects(HttpSession session) {
+//        Object loggedInUser = session.getAttribute("loggedInUser");
+//        if (loggedInUser == null) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+//        }
+//
+//        List<ProjectMember> projects = projectMemberService.findByMemberId(((Member) loggedInUser).getId());
+        List<Project> projects = projectService.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(projects);
     }
 
