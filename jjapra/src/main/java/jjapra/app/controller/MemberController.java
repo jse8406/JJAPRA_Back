@@ -53,7 +53,7 @@ public class MemberController {
             response.addCookie(cookie);
             return ResponseEntity.status(HttpStatus.OK).body(member);
         } else {
-            return ResponseEntity.badRequest().body("비밀번호 오류");
+            return ResponseEntity.badRequest().body("Invalid password");
         }
     }
 
