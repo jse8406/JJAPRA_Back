@@ -10,10 +10,13 @@ import lombok.Setter;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
 import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@EnableWebMvc
 public class MemberController {
     private final MemberService memberService;
 
@@ -60,6 +63,7 @@ public class MemberController {
 
 @Getter
 @Setter
+@EnableWebMvc
 class LoginRequest {
     private String id;
     private String password;

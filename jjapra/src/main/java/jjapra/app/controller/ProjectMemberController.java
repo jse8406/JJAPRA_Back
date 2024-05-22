@@ -7,7 +7,9 @@ import jjapra.app.model.project.ProjectMember;
 import jjapra.app.service.ProjectMemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+@EnableWebMvc
 @RequiredArgsConstructor
 @RestController
 public class ProjectMemberController {
