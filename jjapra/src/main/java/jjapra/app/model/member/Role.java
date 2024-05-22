@@ -8,12 +8,4 @@ public enum Role {
     PL,
     DEV,
     TESTER;
-
-    public ProjectMember toEntity(Project project, Member member) {
-        return ProjectMember.builder()
-                .project(project)
-                .member(member)
-                .role(this)
-                .build();
-    }
 }
