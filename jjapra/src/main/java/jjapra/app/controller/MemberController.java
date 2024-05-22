@@ -1,5 +1,7 @@
 package jjapra.app.controller;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jjapra.app.dto.member.AddMemberRequest;
 import jjapra.app.model.member.Member;
@@ -36,14 +38,18 @@ public class MemberController {
 
     // 로그인
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request, HttpSession session) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest request, HttpSession session, HttpServletResponse response) {
         Member member = memberService.findById(request.getId());
         if (member == null) {
             return ResponseEntity.badRequest().body("아이디 오류");
         }
         if (member.getPassword().equals(request.getPassword())) {
             session.setAttribute("loggedInUser", member);
-            return ResponseEntity.ok().body("로그인 성공");
+            Cookie cookie = new Cookie("memberId", member.getId());
+            cookie.setPath("/");
+            cookie.setMaxAge(60 * 60 * 24); // 1일 동안 유효
+            response.addCookie(cookie);
+            return ResponseEntity.ok().body("loggin success");
         } else {
             return ResponseEntity.badRequest().body("비밀번호 오류");
         }
