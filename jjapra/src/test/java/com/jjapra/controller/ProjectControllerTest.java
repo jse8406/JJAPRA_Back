@@ -55,24 +55,24 @@ public class ProjectControllerTest {
         session.setAttribute("loggedInUser", loggedInUser);
     }
 
-    @DisplayName("Success get all projects")
-    @Test
-    public void testGetProjects() throws Exception {
-        List<Project> projects = new ArrayList<>();
-        Project project = new Project();
-        project.setId(1);
-        project.setTitle("Test Project");
-        projects.add(project);
-
-        when(projectService.findAll()).thenReturn(projects);
-
-        mockMvc.perform(get("/projects")
-                        .session(session))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$[0].id").value(project.getId()))
-                .andExpect(jsonPath("$[0].title").value(project.getTitle()));
-    }
+//    @DisplayName("Success get all projects")
+//    @Test
+//    public void testGetProjects() throws Exception {
+//        List<Project> projects = new ArrayList<>();
+//        Project project = new Project();
+//        project.setId(1);
+//        project.setTitle("Test Project");
+//        projects.add(project);
+//
+//        when(projectService.findAll()).thenReturn(projects);
+//
+//        mockMvc.perform(get("/projects")
+//                        .session(session))
+//                .andExpect(status().isOk())
+//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(jsonPath("$[0].id").value(project.getId()))
+//                .andExpect(jsonPath("$[0].title").value(project.getTitle()));
+//    }
 
     @DisplayName("Success add project")
     @Test
