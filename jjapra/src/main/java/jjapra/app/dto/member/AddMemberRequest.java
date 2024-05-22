@@ -5,10 +5,12 @@ import jjapra.app.model.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 public class AddMemberRequest {
     private String id;
     private String password;
