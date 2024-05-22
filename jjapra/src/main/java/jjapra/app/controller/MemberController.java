@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -45,11 +46,12 @@ public class MemberController {
         }
         if (member.getPassword().equals(request.getPassword())) {
             session.setAttribute("loggedInUser", member);
-            Cookie cookie = new Cookie("memberId", member.getId());
+            String sessionId = session.getId();
+            Cookie cookie = new Cookie("sessionId", sessionId);
             cookie.setPath("/");
             cookie.setMaxAge(60 * 60 * 24); // 1일 동안 유효
             response.addCookie(cookie);
-            return ResponseEntity.ok().body("loggin success");
+            return ResponseEntity.status(HttpStatus.OK).body(member);
         } else {
             return ResponseEntity.badRequest().body("비밀번호 오류");
         }
