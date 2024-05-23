@@ -48,10 +48,12 @@ public class MemberController {
             session.setAttribute("loggedInUser", member);
             String sessionId = session.getId();
             Cookie cookie = new Cookie("sessionId", sessionId);
+            cookie.setAttribute("loggedInUser", member.getId());
+            System.out.println("sessionId: " + sessionId);
             cookie.setPath("/");
             cookie.setMaxAge(60 * 60 * 24); // 1일 동안 유효
             response.addCookie(cookie);
-            return ResponseEntity.status(HttpStatus.OK).body(session.getAttribute("loggedInUser"));
+            return ResponseEntity.status(HttpStatus.OK).body(member);
         } else {
             return ResponseEntity.badRequest().body("Invalid password");
         }
