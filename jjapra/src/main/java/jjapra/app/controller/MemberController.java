@@ -52,6 +52,7 @@ public class MemberController {
             System.out.println("sessionId: " + sessionId);
             cookie.setPath("/");
             cookie.setMaxAge(60 * 60 * 24); // 1일 동안 유효
+            cookie.isHttpOnly();
             response.addCookie(cookie);
             return ResponseEntity.status(HttpStatus.OK).body(member);
         } else {
