@@ -8,7 +8,3 @@ INSERT INTO project (title, description) values ('Channy', 'hi');
 INSERT INTO project (title, description) values ('Unsta9ram', 'hi');
 INSERT INTO project (title, description) values ('Miging', 'hi');
 INSERT INTO project (title, description) values ('Suzzang', 'hi');
-INSERT INTO projectMember (project_id, member_id) values (1, 'test1');
-INSERT INTO projectMember (project_id, member_id) values (1, 'test2');
-INSERT INTO projectMember (project_id, member_id) values (2, 'test1');
-INSERT INTO
