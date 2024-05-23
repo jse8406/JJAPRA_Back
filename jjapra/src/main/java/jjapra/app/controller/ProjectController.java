@@ -39,7 +39,7 @@ public class ProjectController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Project> addProject(@RequestBody AddProjectRequest request, HttpSession session) {
+    public ResponseEntity<?> addProject(@RequestBody AddProjectRequest request, HttpSession session) {
         if (request.getTitle().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
@@ -50,7 +50,7 @@ public class ProjectController {
         Project savedProject = projectService.save(request);
         Member member = (Member) session.getAttribute("loggedInUser");
         if (member == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body((Member) session.getAttribute("loggedInUser"));
         }
         ProjectMember projectMember = ProjectMember.builder()
                 .project(savedProject)
