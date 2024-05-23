@@ -46,11 +46,11 @@ public class MemberController {
         }
         if (member.getPassword().equals(request.getPassword())) {
             session.setAttribute("loggedInUser", member);
-            String sessionId = session.getId();
-            Cookie cookie = new Cookie("sessionId", sessionId);
-            cookie.setPath("/");
-            cookie.setMaxAge(60 * 60 * 24); // 1일 동안 유효
-            response.addCookie(cookie);
+//            String sessionId = session.getId();
+//            Cookie cookie = new Cookie("sessionId", sessionId);
+//            cookie.setPath("/");
+            session.setMaxInactiveInterval(60 * 60 * 24); // 1일 동안 유효
+//            response.addCookie(cookie);
             return ResponseEntity.status(HttpStatus.OK).body(member);
         } else {
             return ResponseEntity.badRequest().body("Invalid password");
