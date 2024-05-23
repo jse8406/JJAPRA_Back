@@ -6,6 +6,8 @@ import jjapra.app.model.project.Project;
 import jjapra.app.model.project.ProjectMember;
 import jjapra.app.service.ProjectMemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -16,16 +18,17 @@ public class ProjectMemberController {
     private final ProjectMemberService projectMemberService;
 
     @PostMapping("/projects/{id}")
-    public ProjectMember save(@PathVariable("id") Integer id, @RequestBody AddProjectMemberRequest request) {
+    public ResponseEntity<ProjectMember> save(@PathVariable("id") Integer id, @RequestBody AddProjectMemberRequest request) {
         Project project = projectMemberService.findProjectById(id);
         if (project == null) {
-            return null;
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         Member member = projectMemberService.findMemberById(request.getMemberId());
         if (member == null) {
-            return null;
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
-        return projectMemberService.save(request, project, member);
+        projectMemberService.save(request, project, member);
+        return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
 }

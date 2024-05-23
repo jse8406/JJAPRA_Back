@@ -26,19 +26,23 @@ public class ProjectController {
     private final ProjectMemberService projectMemberService;
 
     @GetMapping("")
-    public ResponseEntity<List<ProjectMember>> getProjects(HttpSession session) {
-        Object loggedInUser = session.getAttribute("loggedInUser");
-        if (loggedInUser == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
-
-        List<ProjectMember> projects = projectMemberService.findByMemberId(((Member) loggedInUser).getId());
-//        List<Project> projects = projectService.findAll();
+//    public ResponseEntity<List<ProjectMember>> getProjects(HttpSession session) {
+    public ResponseEntity<List<Project>> getProjects(HttpSession session) {
+//        Object loggedInUser = session.getAttribute("loggedInUser");
+//        if (loggedInUser == null) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+//        }
+//
+//        List<ProjectMember> projects = projectMemberService.findByMemberId(((Member) loggedInUser).getId());
+        List<Project> projects = projectService.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(projects);
     }
 
     @PostMapping("")
-    public ResponseEntity<Project> addProject(@RequestBody AddProjectRequest request, HttpSession session) {
+    public ResponseEntity<?> addProject(@RequestBody AddProjectRequest request, HttpSession session) {
+//    public ResponseEntity<?> addProject(@RequestBody AddProjectRequest request, HttpSession session,
+//                                        @CookieValue(value = "loggedInUser", required = true) Member member ) {
+
         if (request.getTitle().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
@@ -47,6 +51,7 @@ public class ProjectController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
         Project savedProject = projectService.save(request);
+
         ProjectMember projectMember = ProjectMember.builder()
                 .project(savedProject)
                 .member((Member) session.getAttribute("loggedInUser"))
