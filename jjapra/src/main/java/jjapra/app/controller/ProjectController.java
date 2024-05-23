@@ -48,10 +48,6 @@ public class ProjectController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
         Project savedProject = projectService.save(request);
-        Member member = (Member) session.getAttribute("loggedInUser");
-        if (member == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body((Member) session.getAttribute("loggedInUser"));
-        }
         ProjectMember projectMember = ProjectMember.builder()
                 .project(savedProject)
                 .member((Member) session.getAttribute("loggedInUser"))
