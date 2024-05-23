@@ -30,11 +30,11 @@ public class MemberController {
             return ResponseEntity.badRequest().body(null);
         }
         if (memberService.findById(request.getId()) != null) {
-            return ResponseEntity.badRequest().body("이미 존재하는 아이디입니다.");
+            return ResponseEntity.badRequest().body("already exists id");
         }
 
         memberService.save(request);
-        return ResponseEntity.ok().body("회원가입이 완료되었습니다.");
+        return ResponseEntity.ok().body("success");
     }
 
     // 로그인
@@ -42,7 +42,7 @@ public class MemberController {
     public ResponseEntity<?> login(@RequestBody LoginRequest request, HttpSession session, HttpServletResponse response) {
         Member member = memberService.findById(request.getId());
         if (member == null) {
-            return ResponseEntity.badRequest().body("아이디 오류");
+            return ResponseEntity.badRequest().body("Invalid id");
         }
         if (member.getPassword().equals(request.getPassword())) {
             session.setAttribute("loggedInUser", member);
