@@ -39,9 +39,9 @@ public class ProjectController {
     }
 
     @PostMapping("")
-//    public ResponseEntity<?> addProject(@RequestBody AddProjectRequest request, HttpSession session) {
-    public ResponseEntity<?> addProject(@RequestBody AddProjectRequest request, HttpSession session,
-                                        @CookieValue(value = "loggedInUser", required = true) Member member ) {
+    public ResponseEntity<?> addProject(@RequestBody AddProjectRequest request, HttpSession session) {
+//    public ResponseEntity<?> addProject(@RequestBody AddProjectRequest request, HttpSession session,
+//                                        @CookieValue(value = "loggedInUser", required = true) Member member ) {
 
         if (request.getTitle().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -54,7 +54,7 @@ public class ProjectController {
 
         ProjectMember projectMember = ProjectMember.builder()
                 .project(savedProject)
-                .member(member)
+                .member((Member) session.getAttribute("loggedInUser"))
                 .role(Role.PL)
                 .build();
         projectMemberService.save(projectMember);
