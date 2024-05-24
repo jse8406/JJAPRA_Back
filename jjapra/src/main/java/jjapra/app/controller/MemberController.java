@@ -39,21 +39,14 @@ public class MemberController {
 
     // 로그인
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request, HttpSession session, HttpServletResponse response) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest request, HttpSession session) {
         Member member = memberService.findById(request.getId());
         if (member == null) {
             return ResponseEntity.badRequest().body("Invalid id");
         }
         if (member.getPassword().equals(request.getPassword())) {
             session.setAttribute("loggedInUser", member);
-            String sessionId = session.getId();
-            Cookie cookie = new Cookie("sessionId", sessionId);
-            cookie.setAttribute("loggedInUser", member.getId());
-            System.out.println("sessionId: " + sessionId);
-            cookie.setPath("/");
-            cookie.setMaxAge(60 * 60 * 24); // 1일 동안 유효
 
-            response.addCookie(cookie);
             return ResponseEntity.status(HttpStatus.OK).body(member);
         } else {
             return ResponseEntity.badRequest().body("Invalid password");
