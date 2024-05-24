@@ -2,6 +2,7 @@ package jjapra.app.dto.member;
 
 
 import jjapra.app.model.member.Member;
+import jjapra.app.model.member.MemberRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,7 @@ public class AddMemberRequest {
                 .name(name)
                 .email(email)
                 .phone_num(phone_num)
+                .role(MemberRole.USER)
                 .build();
     }
 }

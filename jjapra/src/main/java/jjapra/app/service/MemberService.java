@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -17,8 +18,8 @@ public class MemberService {
         return memberRepository.save(request.toEntity());
     }
 
-    public Member findByUsername(String username) {
-        return memberRepository.findByUsername(username).orElse(null);
+    public Optional<Member> findByUsername(String username) {
+        return memberRepository.findByUsername(username);
     }
 
     public List<Member> findAll() {

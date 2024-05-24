@@ -64,12 +64,15 @@ public class WebSecurityConfig {
         http
                 .cors(WebSecurityConfig::corsAllow)
                 .csrf(AbstractHttpConfigurer::disable)
-                .formLogin(AbstractHttpConfigurer::disable)
+//                .formLogin(AbstractHttpConfigurer::disable)
                 .logout((logout) -> logout
                         .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler()))
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(new MvcRequestMatcher(introspector, "/login"),
-                                new MvcRequestMatcher(introspector, "/join")).permitAll())
+                        .requestMatchers(
+                                new MvcRequestMatcher(introspector, "/login"),
+                                new MvcRequestMatcher(introspector, "/join"),
+                                new MvcRequestMatcher(introspector, "/h2-console/**"),
+                                new MvcRequestMatcher(introspector, "/h2-console")).permitAll())
 //                        .requestMatchers(HttpMethod.GET, "/post",  "/post/random", "/post/{title}").hasAnyRole("GUEST", "ACTIVE", "ADMIN")
 //                        .requestMatchers("/post", "/post/upload", "/post/{title}").hasAnyRole("ACTIVE", "ADMIN")
 //                        .requestMatchers("/admin", "/admin/{id}").hasRole("ADMIN"))

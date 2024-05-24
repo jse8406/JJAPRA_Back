@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jjapra.app.dto.auth.CustomUserDetails;
 import jjapra.app.model.member.Member;
+import jjapra.app.model.member.MemberRole;
 import jjapra.app.model.member.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -38,13 +39,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         String username = jwtProvider.getUsername(token);
-        Role role = Role.valueOf(jwtProvider.getRole(token));
+        MemberRole role = MemberRole.valueOf(jwtProvider.getRole(token));
 
         //userEntity를 생성하여 값 set
         Member member = Member.builder()
                 .username(username)
                 .password("tempPassword")
-//                .role(role)
+                .role(role)
                 .build();
 
         //UserDetails에 회원 정보 객체 담기
