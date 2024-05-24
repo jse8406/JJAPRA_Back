@@ -18,7 +18,7 @@ public class CustomUserDetails implements UserDetails {
 
         Collection<GrantedAuthority> collection = new ArrayList<>();
 
-        collection.add((GrantedAuthority) () -> ROLE_PREFIX + member.getRole().toString());
+        collection.add((GrantedAuthority) () -> ROLE_PREFIX + "USER");
 
         return collection;
     }

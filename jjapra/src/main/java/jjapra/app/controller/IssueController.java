@@ -71,7 +71,7 @@ public class IssueController {
                                               @RequestBody AddCommentRequest request,
                                               HttpSession session) {
         Member loggedInUser = (Member) session.getAttribute("loggedInUser");
-        request.setWriterId(loggedInUser.getId());
+        request.setWriterId(loggedInUser.getUsername());
         Comment savedComment = issueService.addComment(issueId,request);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedComment);
     }
