@@ -17,8 +17,8 @@ public class MemberService {
         return memberRepository.save(request.toEntity());
     }
 
-    public Member findById(String id) {
-        return memberRepository.findById(id).orElse(null);
+    public Member findByUsername(String username) {
+        return memberRepository.findByUsername(username).orElse(null);
     }
 
     public List<Member> findAll() {

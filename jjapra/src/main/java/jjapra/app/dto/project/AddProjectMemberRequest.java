@@ -2,7 +2,7 @@ package jjapra.app.dto.project;
 
 import jjapra.app.model.member.Member;
 import jjapra.app.model.project.Project;
-import jjapra.app.model.project.ProjectMember;
+//import jjapra.app.model.project.ProjectMember;
 import jjapra.app.model.member.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,15 +14,14 @@ import lombok.Setter;
 @Setter
 @Getter
 public class AddProjectMemberRequest {
-    private String memberId;
+    private String memberUsername;
     private Role role;
 
-    public ProjectMember toEntity(Project project, Member member) {
-        System.out.println("ProjectMember.toEntity@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        return ProjectMember.builder()
-                .project(project)
-                .member(member)
-                .role(role)
-                .build();
-    }
+//    public ProjectMember toEntity(Project project, Member member) {
+//        return ProjectMember.builder()
+//                .project(project)
+//                .member(member)
+//                .role(role)
+//                .build();
+//    }
 }

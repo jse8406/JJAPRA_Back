@@ -3,6 +3,7 @@ package jjapra.app.controller;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jjapra.app.config.jwt.JwtProvider;
 import jjapra.app.dto.member.AddMemberRequest;
 import jjapra.app.model.member.Member;
 import jjapra.app.service.MemberService;
@@ -22,14 +23,15 @@ import java.util.List;
 @EnableWebMvc
 public class MemberController {
     private final MemberService memberService;
+    private final JwtProvider jwtProvider;
 
     // 회원가입
     @PostMapping("/join")
     public ResponseEntity<Object> displayJoinSuccessPage(@RequestBody AddMemberRequest request) {
-        if (request.getId().isEmpty()){
+        if (request.getUsername().isEmpty()){
             return ResponseEntity.badRequest().body(null);
         }
-        if (memberService.findById(request.getId()) != null) {
+        if (memberService.findByUsername(request.getUsername()) != null) {
             return ResponseEntity.badRequest().body("already exists id");
         }
 
@@ -40,13 +42,11 @@ public class MemberController {
     // 로그인
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request, HttpSession session) {
-        Member member = memberService.findById(request.getId());
+        Member member = memberService.findByUsername(request.getUsername());
         if (member == null) {
             return ResponseEntity.badRequest().body("Invalid id");
         }
         if (member.getPassword().equals(request.getPassword())) {
-            session.setAttribute("loggedInUser", member);
-
             return ResponseEntity.status(HttpStatus.OK).body(member);
         } else {
             return ResponseEntity.badRequest().body("Invalid password");
@@ -54,9 +54,9 @@ public class MemberController {
     }
 
     // 회원 정보 조회. 회원 ID를 받아서 해당 회원의 정보를 반환
-    @GetMapping("/members/{id}")
-    public Member getMember(@PathVariable("id") String id) {
-        return memberService.findById(id);
+    @GetMapping("/members/{username}")
+    public Member getMember(@PathVariable("username") String username) {
+        return memberService.findByUsername(username);
     }
 
     @GetMapping("/members")
@@ -69,6 +69,6 @@ public class MemberController {
 @Setter
 @EnableWebMvc
 class LoginRequest {
-    private String id;
+    private String username;
     private String password;
 }

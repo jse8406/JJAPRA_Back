@@ -18,7 +18,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -58,7 +60,7 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
         http
                 .cors(WebSecurityConfig::corsAllow)
                 .csrf(AbstractHttpConfigurer::disable)
@@ -66,7 +68,8 @@ public class WebSecurityConfig {
                 .logout((logout) -> logout
                         .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler()))
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/join", "/login").permitAll())
+                        .requestMatchers(new MvcRequestMatcher(introspector, "/login"),
+                                new MvcRequestMatcher(introspector, "/join")).permitAll())
 //                        .requestMatchers(HttpMethod.GET, "/post",  "/post/random", "/post/{title}").hasAnyRole("GUEST", "ACTIVE", "ADMIN")
 //                        .requestMatchers("/post", "/post/upload", "/post/{title}").hasAnyRole("ACTIVE", "ADMIN")
 //                        .requestMatchers("/admin", "/admin/{id}").hasRole("ADMIN"))
