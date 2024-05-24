@@ -40,7 +40,7 @@ public class WebSecurityConfig {
             CorsConfiguration configuration = new CorsConfiguration();
 
             configuration.setAllowedMethods(Collections.singletonList("*"));
-            configuration.setAllowedOrigins(Arrays.asList("http://127.0.0.1:3000", "https://127.0.0.1:5500"));
+            configuration.setAllowedOrigins(Collections.singletonList("*"));
             configuration.setAllowedHeaders(Collections.singletonList("*"));
             configuration.setAllowCredentials(true);
             configuration.setMaxAge(3600L);

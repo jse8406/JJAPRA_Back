@@ -43,11 +43,11 @@ public class MemberController {
     // 로그인
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request, HttpSession session) {
-        Member member = memberService.findByUsername(request.getUsername()).orElse(null);
-        if (member == null) {
+        Optional<Member> member = memberService.findByUsername(request.getUsername());
+        if (member.isEmpty()) {
             return ResponseEntity.badRequest().body("Invalid id");
         }
-        if (member.getPassword().equals(request.getPassword())) {
+        if (member.get().getPassword().equals(request.getPassword())) {
             return ResponseEntity.status(HttpStatus.OK).body(member);
         } else {
             return ResponseEntity.badRequest().body("Invalid password");
