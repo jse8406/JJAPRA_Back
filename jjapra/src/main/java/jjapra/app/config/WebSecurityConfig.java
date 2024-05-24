@@ -18,7 +18,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
+import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
@@ -64,20 +66,22 @@ public class WebSecurityConfig {
         http
                 .cors(WebSecurityConfig::corsAllow)
                 .csrf(AbstractHttpConfigurer::disable)
-//                .formLogin(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
                 .logout((logout) -> logout
                         .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler()))
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers(
-                                new MvcRequestMatcher(introspector, "/login"),
-                                new MvcRequestMatcher(introspector, "/join"),
-                                new MvcRequestMatcher(introspector, "/h2-console/**"),
-                                new MvcRequestMatcher(introspector, "/h2-console")).permitAll())
+                                new AntPathRequestMatcher("/**")).permitAll())
 //                        .requestMatchers(HttpMethod.GET, "/post",  "/post/random", "/post/{title}").hasAnyRole("GUEST", "ACTIVE", "ADMIN")
 //                        .requestMatchers("/post", "/post/upload", "/post/{title}").hasAnyRole("ACTIVE", "ADMIN")
 //                        .requestMatchers("/admin", "/admin/{id}").hasRole("ADMIN"))
+                .csrf((csrf) -> csrf
+                        .ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**")))
+                .headers((headers) -> headers
+                        .addHeaderWriter(new XFrameOptionsHeaderWriter(
+                                XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
                 .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtProvider, objectMapper), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), LoginFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
 
                 //세션 설정
                 .sessionManagement((session) -> session
