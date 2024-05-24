@@ -3,6 +3,7 @@ package jjapra.app.model.member;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.*;
 //import org.springframework.security.core.GrantedAuthority;
@@ -20,9 +21,11 @@ import java.util.List;
 @Entity
 public class Member {
     @Id
+    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+    private Long id;
     @Column(nullable = false, length = 30)
-    private String id;
-    @Column(nullable = false, length = 30)
+    private String username;
+    @Column(nullable = false)
     private String password;
     @Column(nullable = false, length = 30)
     private String name;
