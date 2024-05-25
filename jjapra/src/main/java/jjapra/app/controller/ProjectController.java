@@ -1,12 +1,15 @@
 package jjapra.app.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jjapra.app.config.jwt.JwtProvider;
+import jjapra.app.dto.project.AddProjectMemberRequest;
 import jjapra.app.dto.project.AddProjectRequest;
 import jjapra.app.model.member.Member;
 import jjapra.app.model.project.Project;
-//import jjapra.app.model.project.ProjectMember;
-//import jjapra.app.model.member.Role;
-//import jjapra.app.service.ProjectMemberService;
+import jjapra.app.model.project.ProjectMember;
+import jjapra.app.service.MemberService;
+import jjapra.app.service.ProjectMemberService;
 import jjapra.app.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.List;
+import java.util.Optional;
+
+import static jjapra.app.config.jwt.JwtProvider.extractToken;
 
 @EnableWebMvc
 @RequiredArgsConstructor
@@ -23,7 +29,9 @@ import java.util.List;
 public class ProjectController {
 
     private final ProjectService projectService;
-//    private final ProjectMemberService projectMemberService;
+    private final JwtProvider jwtProvider;
+    private final ProjectMemberService projectMemberService;
+    private final MemberService memberService;
 
     @GetMapping("")
     public ResponseEntity<List<Project>> getProjects() {
@@ -32,7 +40,7 @@ public class ProjectController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> addProject(@RequestBody AddProjectRequest request) {
+    public ResponseEntity<?> addProject(@RequestBody AddProjectRequest request, HttpServletRequest Httprequest) {
         if (request.getTitle().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
@@ -41,6 +49,11 @@ public class ProjectController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
         Project savedProject = projectService.save(request);
+        String token = extractToken(Httprequest);
+        String username = jwtProvider.getUsername(token);
+        Optional<Member> member = memberService.findByUsername(username);
+        ProjectMember entity = AddProjectMemberRequest.toEntity(savedProject, member.get());
+        projectMemberService.save(entity);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedProject);
     }
 

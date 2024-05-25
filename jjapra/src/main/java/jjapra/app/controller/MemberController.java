@@ -1,6 +1,7 @@
 package jjapra.app.controller;
 
 import jakarta.servlet.http.HttpSession;
+import jjapra.app.config.jwt.JwtProvider;
 import jjapra.app.dto.member.AddMemberRequest;
 import jjapra.app.model.member.Member;
 import jjapra.app.service.MemberService;
@@ -21,6 +22,7 @@ import java.util.Optional;
 @EnableWebMvc
 public class MemberController {
     private final MemberService memberService;
+    private final JwtProvider jwtProvider;
 
     // 회원가입
     @PostMapping("/join")
@@ -39,12 +41,14 @@ public class MemberController {
     // 로그인
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        System.out.println(request.getUsername() + " " + request.getPassword());
         Optional<Member> member = memberService.findByUsername(request.getUsername());
         if (member.isEmpty()) {
             return ResponseEntity.badRequest().body("Invalid id");
         }
         if (member.get().getPassword().equals(request.getPassword())) {
-            return ResponseEntity.status(HttpStatus.OK).body(member);
+            String token = jwtProvider.createJwt(member.get().getUsername(), member.get().getRole().toString());
+            return ResponseEntity.status(HttpStatus.OK).body(token);
         } else {
             return ResponseEntity.badRequest().body("Invalid password");
         }

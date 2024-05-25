@@ -25,3 +25,9 @@ spring:
     secret: your-secret-key
     access-token:
       expire-length: 3600000
+
+logging:
+  file:
+    name:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"

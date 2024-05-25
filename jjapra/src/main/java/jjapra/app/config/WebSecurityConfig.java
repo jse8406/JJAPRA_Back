@@ -79,12 +79,13 @@ public class WebSecurityConfig {
                         .ignoringRequestMatchers(
                                 new AntPathRequestMatcher("/h2-console/**"),
                                 new AntPathRequestMatcher("/login"),
-                                new AntPathRequestMatcher("/join")
+                                new AntPathRequestMatcher("/join"),
+                                new AntPathRequestMatcher("/**")
                                 ))
                 .headers((headers) -> headers
                         .addHeaderWriter(new XFrameOptionsHeaderWriter(
                                 XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
-                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtProvider, objectMapper), UsernamePasswordAuthenticationFilter.class)
+//                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtProvider, objectMapper), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
 
                 //세션 설정
