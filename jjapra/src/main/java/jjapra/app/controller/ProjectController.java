@@ -1,7 +1,6 @@
 package jjapra.app.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
-
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpSession;
 import jjapra.app.config.jwt.JwtProvider;

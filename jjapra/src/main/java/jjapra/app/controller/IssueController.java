@@ -1,7 +1,6 @@
 package jjapra.app.controller;
 
 import jakarta.servlet.http.HttpSession;
-
 import jjapra.app.config.jwt.JwtMember;
 import jjapra.app.dto.issue.AddCommentRequest;
 import jjapra.app.dto.issue.AddIssueRequest;
@@ -68,7 +67,6 @@ public class IssueController {
 
     @GetMapping("/issues/details/{id}")
     public ResponseEntity<IssueDetailsResponse> getIssueDetails(@PathVariable("id") Integer id, HttpSession session) {
-
         Issue issue = issueService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid issue Id:" + id));
         List<Comment> comments = issueService.findCommentsByIssueId(id);
