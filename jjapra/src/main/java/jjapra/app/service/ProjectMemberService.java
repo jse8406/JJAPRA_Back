@@ -37,7 +37,7 @@ public class ProjectMemberService {
         return projectMemberRepository.save(projectMember);
     }
 
-    public Optional<ProjectMember> findByUsername(String username) {
-        return projectMemberRepository.findByUsername(username);
-    }
+//    public Optional<ProjectMember> findByUsername(String username) {
+//        return projectMemberRepository.findByUsername(username);
+//    }
 }

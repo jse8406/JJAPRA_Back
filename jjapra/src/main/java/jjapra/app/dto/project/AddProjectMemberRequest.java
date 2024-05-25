@@ -25,4 +25,7 @@ public class AddProjectMemberRequest {
                 .role(Role.DEV)
                 .build();
     }
+    public String getMemberUsername(){
+        return memberId;
+    }
 }

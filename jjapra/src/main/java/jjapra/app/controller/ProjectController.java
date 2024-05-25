@@ -1,6 +1,6 @@
 package jjapra.app.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jjapra.app.config.jwt.JwtProvider;
 import jjapra.app.dto.project.AddProjectMemberRequest;

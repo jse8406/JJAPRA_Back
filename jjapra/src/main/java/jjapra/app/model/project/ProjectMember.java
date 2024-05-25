@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-@DependsOn(value={"Project", "Account"})
+//@DependsOn(value={"Project", "Account"})
 @Getter
 public class ProjectMember {
     @Id
@@ -35,38 +35,4 @@ public class ProjectMember {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return List.of(new SimpleGrantedAuthority("user"));
-//    }
-//
-//    @Override
-//    public String getPassword() {
-//        return member.getPassword();
-//    }
-//
-//    @Override
-//    public String getUsername() {
-//        return member.getUsername();
-//    }
-//
-//    @Override
-//    public boolean isAccountNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonLocked() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isCredentialsNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isEnabled() {
-//        return true;
-//    }
 }
