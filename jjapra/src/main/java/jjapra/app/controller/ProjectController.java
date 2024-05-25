@@ -27,7 +27,7 @@ public class ProjectController {
 
     @GetMapping("")
 //    public ResponseEntity<List<ProjectMember>> getProjects(HttpSession session) {
-    public ResponseEntity<List<Project>> getProjects(HttpSession session) {
+    public ResponseEntity<List<Project>> getProjects() {
 //        Object loggedInUser = session.getAttribute("loggedInUser");
 //        if (loggedInUser == null) {
 //            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
@@ -39,7 +39,7 @@ public class ProjectController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> addProject(@RequestBody AddProjectRequest request, HttpSession session) {
+    public ResponseEntity<?> addProject(@RequestBody AddProjectRequest request) {
 //    public ResponseEntity<?> addProject(@RequestBody AddProjectRequest request, HttpSession session,
 //                                        @CookieValue(value = "loggedInUser", required = true) Member member ) {
 
