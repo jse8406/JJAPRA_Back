@@ -4,9 +4,9 @@ import jakarta.servlet.http.HttpSession;
 import jjapra.app.dto.project.AddProjectRequest;
 import jjapra.app.model.member.Member;
 import jjapra.app.model.project.Project;
-import jjapra.app.model.project.ProjectMember;
-import jjapra.app.model.member.Role;
-import jjapra.app.service.ProjectMemberService;
+//import jjapra.app.model.project.ProjectMember;
+//import jjapra.app.model.member.Role;
+//import jjapra.app.service.ProjectMemberService;
 import jjapra.app.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ import java.util.List;
 public class ProjectController {
 
     private final ProjectService projectService;
-    private final ProjectMemberService projectMemberService;
+//    private final ProjectMemberService projectMemberService;
 
     @GetMapping("")
 //    public ResponseEntity<List<ProjectMember>> getProjects(HttpSession session) {
@@ -52,12 +52,12 @@ public class ProjectController {
         }
         Project savedProject = projectService.save(request);
 
-        ProjectMember projectMember = ProjectMember.builder()
-                .project(savedProject)
-                .member((Member) session.getAttribute("loggedInUser"))
-                .role(Role.PL)
-                .build();
-        projectMemberService.save(projectMember);
+//        ProjectMember projectMember = ProjectMember.builder()
+//                .project(savedProject)
+//                .member((Member) session.getAttribute("loggedInUser"))
+//                .role(Role.PL)
+//                .build();
+//        projectMemberService.save(projectMember);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(savedProject);
     }
