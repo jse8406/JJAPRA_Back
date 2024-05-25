@@ -18,10 +18,8 @@ import java.util.List;
 @Entity
 public class Member {
     @Id
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
-    private Long id;
     @Column(nullable = false, length = 30, unique = true)
-    private String username;
+    private String id;
     @Column(nullable = false, length = 30)
     private String password;
     @Column(nullable = false, length = 30)

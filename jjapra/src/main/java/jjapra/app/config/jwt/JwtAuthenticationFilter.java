@@ -38,12 +38,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        String username = jwtProvider.getUsername(token);
+        String id = jwtProvider.getId(token);
         MemberRole role = MemberRole.valueOf(jwtProvider.getRole(token));
 
         //userEntity를 생성하여 값 set
         Member member = Member.builder()
-                .username(username)
+                .id(id)
                 .password("tempPassword")
                 .role(role)
                 .build();

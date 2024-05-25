@@ -14,15 +14,13 @@ import lombok.Setter;
 @Setter
 @Getter
 public class AddProjectMemberRequest {
-    private String memberId;
-    private Role role;
+    private String role;
 
-    public static ProjectMember toEntity(Project project, Member member) {
+    public static ProjectMember toEntity(Project project, Member member, String role) {
         return ProjectMember.builder()
                 .project(project)
                 .member(member)
-                // role이 있다면 role을 설정하고 없다면 DEV로 설정
-                .role(Role.DEV)
+                .role(Role.valueOf(role))
                 .build();
     }
 }

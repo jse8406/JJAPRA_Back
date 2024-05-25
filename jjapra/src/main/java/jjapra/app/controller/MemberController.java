@@ -27,10 +27,10 @@ public class MemberController {
     // 회원가입
     @PostMapping("/join")
     public ResponseEntity<Object> displayJoinSuccessPage(@RequestBody AddMemberRequest request) {
-        if (request.getUsername().isEmpty()){
+        if (request.getId().isEmpty()){
             return ResponseEntity.badRequest().body(null);
         }
-        if (memberService.findByUsername(request.getUsername()).isPresent()) {
+        if (memberService.findById(request.getId()).isPresent()) {
             return ResponseEntity.badRequest().body("already exists id");
         }
 
@@ -41,13 +41,12 @@ public class MemberController {
     // 로그인
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        System.out.println(request.getUsername() + " " + request.getPassword());
-        Optional<Member> member = memberService.findByUsername(request.getUsername());
+        Optional<Member> member = memberService.findById(request.getId());
         if (member.isEmpty()) {
             return ResponseEntity.badRequest().body("Invalid id");
         }
         if (member.get().getPassword().equals(request.getPassword())) {
-            String token = jwtProvider.createJwt(member.get().getUsername(), member.get().getRole().toString());
+            String token = jwtProvider.createJwt(member.get().getId(), member.get().getRole().toString());
             return ResponseEntity.status(HttpStatus.OK).body(token);
         } else {
             return ResponseEntity.badRequest().body("Invalid password");
@@ -56,8 +55,8 @@ public class MemberController {
 
     // 회원 정보 조회. 회원 ID를 받아서 해당 회원의 정보를 반환
     @GetMapping("/members/{username}")
-    public Optional<Member> getMember(@PathVariable("username") String username) {
-        return memberService.findByUsername(username);
+    public Optional<Member> getMember(@PathVariable("username") String id) {
+        return memberService.findById(id);
     }
 
     @GetMapping("/members")
@@ -70,6 +69,6 @@ public class MemberController {
 @Setter
 @EnableWebMvc
 class LoginRequest {
-    private String username;
+    private String id;
     private String password;
 }

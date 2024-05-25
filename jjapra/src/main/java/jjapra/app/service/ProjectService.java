@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -22,8 +23,8 @@ public class ProjectService {
     public Project save(AddProjectRequest request) {
         return projectRepository.save(request.toEntity());
     }
-    public Project findById(Integer id) {
-        return projectRepository.findById(id).orElse(null);
+    public Optional<Project> findById(Integer id) {
+        return projectRepository.findById(id);
     }
 
     public Project findByTitle(String title) {

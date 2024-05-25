@@ -29,7 +29,7 @@ public class ProjectMember {
     private Project project;
 
     @ManyToOne
-    @JoinColumn(name = "username", nullable = false)
+    @JoinColumn(name = "memberId", nullable = false)
     private Member member;
 
     @Enumerated(EnumType.STRING)

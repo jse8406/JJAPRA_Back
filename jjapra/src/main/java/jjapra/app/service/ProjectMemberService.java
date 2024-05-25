@@ -2,6 +2,7 @@ package jjapra.app.service;
 
 import jjapra.app.dto.project.AddProjectMemberRequest;
 import jjapra.app.model.member.Member;
+import jjapra.app.model.member.Role;
 import jjapra.app.model.project.Project;
 import jjapra.app.model.project.ProjectMember;
 import jjapra.app.repository.MemberRepository;
@@ -17,27 +18,17 @@ import java.util.Optional;
 @Service
 public class ProjectMemberService {
     private final ProjectMemberRepository projectMemberRepository;
-    private final ProjectRepository projectRepository;
-    private final MemberRepository memberRepository;
 
-    public Project findProjectById(Integer id) {
-        return projectRepository.findById(id).orElse(null);
-    }
-
-
-    public Member findMemberByUsername(String username) {
-        return memberRepository.findByUsername(username).orElse(null);
-    }
-
-    public ProjectMember save(AddProjectMemberRequest request, Project project, Member member) {
-        return projectMemberRepository.save(request.toEntity(project, member));
-    }
+//    public ProjectMember save(Project project, Member member, String role) {
+//        AddProjectMemberRequest request = new AddProjectMemberRequest();
+//        return projectMemberRepository.save(project, member, Role.valueOf(role));
+//    }
 
     public ProjectMember save(ProjectMember projectMember) {
         return projectMemberRepository.save(projectMember);
     }
 
-    public Optional<ProjectMember> findByUsername(String username) {
-        return projectMemberRepository.findByUsername(username);
+    public List<ProjectMember> findByMemberId(String id) {
+        return projectMemberRepository.findByMemberId(id);
     }
 }

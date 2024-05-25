@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AddMemberRequest {
-    private String username;
+    private String id;
     private String password;
     private String name;
     private String email;
@@ -21,7 +21,7 @@ public class AddMemberRequest {
 
     public Member toEntity(){
         return Member.builder()
-                .username(username)
+                .id(id)
                 .password(password)
                 .name(name)
                 .email(email)
