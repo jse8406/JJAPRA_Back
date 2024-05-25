@@ -26,23 +26,13 @@ public class ProjectController {
 //    private final ProjectMemberService projectMemberService;
 
     @GetMapping("")
-//    public ResponseEntity<List<ProjectMember>> getProjects(HttpSession session) {
     public ResponseEntity<List<Project>> getProjects() {
-//        Object loggedInUser = session.getAttribute("loggedInUser");
-//        if (loggedInUser == null) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-//        }
-//
-//        List<ProjectMember> projects = projectMemberService.findByMemberId(((Member) loggedInUser).getId());
         List<Project> projects = projectService.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(projects);
     }
 
     @PostMapping("")
     public ResponseEntity<?> addProject(@RequestBody AddProjectRequest request) {
-//    public ResponseEntity<?> addProject(@RequestBody AddProjectRequest request, HttpSession session,
-//                                        @CookieValue(value = "loggedInUser", required = true) Member member ) {
-
         if (request.getTitle().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
@@ -51,35 +41,8 @@ public class ProjectController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
         Project savedProject = projectService.save(request);
-
-
-//    @PostMapping("")
-//    public ResponseEntity<?> addProject(@RequestBody AddProjectRequest request, HttpSession session) {
-////    public ResponseEntity<?> addProject(@RequestBody AddProjectRequest request, HttpSession session,
-////                                        @CookieValue(value = "loggedInUser", required = true) Member member ) {
-//
-//        if (request.getTitle().isEmpty()) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-//        }
-//        Project project = projectService.findByTitle(request.getTitle());
-//        if (project != null) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-//        }
-//        Project savedProject = projectService.save(request);
-//
-
-//        ProjectMember projectMember = ProjectMember.builder()
-//                .project(savedProject)
-//                .member((Member) session.getAttribute("loggedInUser"))
-//                .role(Role.PL)
-//                .build();
-//        projectMemberService.save(projectMember);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedProject);
     }
-
-//
-//        return ResponseEntity.status(HttpStatus.CREATED).body(savedProject);
-//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Project> getProject(@PathVariable("id") Integer id) {
