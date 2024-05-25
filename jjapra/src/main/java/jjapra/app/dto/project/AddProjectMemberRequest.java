@@ -18,7 +18,12 @@
 //    private Role role;
 //
 //    public ProjectMember toEntity(Project project, Member member) {
-//        System.out.println("ProjectMember.toEntity@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+
+//import jjapra.app.model.member.Member;
+//import jjapra.app.model.project.Project;
+//import jjapra.app.model.project.ProjectMember;
+
+//    public ProjectMember toEntity(Project project, Member member) {
 //        return ProjectMember.builder()
 //                .project(project)
 //                .member(member)

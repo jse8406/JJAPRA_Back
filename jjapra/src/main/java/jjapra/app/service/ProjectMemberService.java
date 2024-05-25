@@ -11,6 +11,7 @@
 //import org.springframework.stereotype.Service;
 //
 //import java.util.List;
+//import java.util.Optional;
 //
 //@RequiredArgsConstructor
 //@Service
@@ -24,6 +25,8 @@
 //    }
 //
 //    public Member findMemberById(String username) {
+
+//    public Member findMemberByUsername(String username) {
 //        return memberRepository.findByUsername(username).orElse(null);
 //    }
 //
@@ -37,5 +40,7 @@
 //
 //    public List<ProjectMember> findByMemberId(String memberId) {
 //        return projectMemberRepository.findByMemberId(memberId);
+//    public Optional<ProjectMember> findByUsername(String username) {
+//        return projectMemberRepository.findByUsername(username);
 //    }
 //}

@@ -30,7 +30,7 @@ public class Member {
     private String email;
     @Column(nullable = false, length = 30)
     private String phone_num;
-    @Column
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private MemberRole role;
 }

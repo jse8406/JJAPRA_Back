@@ -23,7 +23,7 @@
 //        if (project == null) {
 //            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 //        }
-//        Member member = projectMemberService.findMemberById(request.getMemberId());
+//        Member member = projectMemberService.findMemberByUsername(request.getMemberUsername());
 //        if (member == null) {
 //            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 //        }

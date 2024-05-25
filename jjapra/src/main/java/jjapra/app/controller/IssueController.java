@@ -19,6 +19,9 @@
 //import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 //
 //import java.util.List;
+
+//import java.util.Optional;
+
 //import java.util.stream.Collectors;
 //
 //@EnableWebMvc
@@ -40,7 +43,9 @@
 //    @GetMapping("/issues")
 //    public ResponseEntity<List<Issue>> getIssues(HttpSession session) {
 //        Member loggedInUser = (Member) session.getAttribute("loggedInUser");
+
 //        List<ProjectMember> projectMemberList = projectMemberService.findByMemberId(loggedInUser.getUsername());
+
 //        List<Integer> projectIds = projectMemberList.stream()
 //                .map(pm -> pm.getProject().getId())
 //                .collect(Collectors.toList());

@@ -52,15 +52,34 @@ public class ProjectController {
         }
         Project savedProject = projectService.save(request);
 
+
+//    @PostMapping("")
+//    public ResponseEntity<?> addProject(@RequestBody AddProjectRequest request, HttpSession session) {
+////    public ResponseEntity<?> addProject(@RequestBody AddProjectRequest request, HttpSession session,
+////                                        @CookieValue(value = "loggedInUser", required = true) Member member ) {
+//
+//        if (request.getTitle().isEmpty()) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+//        }
+//        Project project = projectService.findByTitle(request.getTitle());
+//        if (project != null) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+//        }
+//        Project savedProject = projectService.save(request);
+//
+
 //        ProjectMember projectMember = ProjectMember.builder()
 //                .project(savedProject)
 //                .member((Member) session.getAttribute("loggedInUser"))
 //                .role(Role.PL)
 //                .build();
 //        projectMemberService.save(projectMember);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(savedProject);
     }
+
+//
+//        return ResponseEntity.status(HttpStatus.CREATED).body(savedProject);
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Project> getProject(@PathVariable("id") Integer id) {
