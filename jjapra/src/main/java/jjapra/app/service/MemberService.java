@@ -15,7 +15,8 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     public Member save(AddMemberRequest request) {
-        return memberRepository.save(request.toEntity());
+        Member member = request.toEntity();
+        return memberRepository.save(member);
     }
 
     public Optional<Member> findByUsername(String username) {

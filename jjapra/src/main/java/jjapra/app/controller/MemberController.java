@@ -1,9 +1,6 @@
 package jjapra.app.controller;
 
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jjapra.app.config.jwt.JwtProvider;
 import jjapra.app.dto.member.AddMemberRequest;
 import jjapra.app.model.member.Member;
 import jjapra.app.service.MemberService;
@@ -24,7 +21,6 @@ import java.util.Optional;
 @EnableWebMvc
 public class MemberController {
     private final MemberService memberService;
-    private final JwtProvider jwtProvider;
 
     // 회원가입
     @PostMapping("/join")
