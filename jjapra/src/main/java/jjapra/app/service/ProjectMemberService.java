@@ -19,11 +19,6 @@ import java.util.Optional;
 public class ProjectMemberService {
     private final ProjectMemberRepository projectMemberRepository;
 
-//    public ProjectMember save(Project project, Member member, String role) {
-//        AddProjectMemberRequest request = new AddProjectMemberRequest();
-//        return projectMemberRepository.save(project, member, Role.valueOf(role));
-//    }
-
     public ProjectMember save(ProjectMember projectMember) {
         return projectMemberRepository.save(projectMember);
     }
