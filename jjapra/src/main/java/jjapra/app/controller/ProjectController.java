@@ -4,11 +4,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpSession;
 import jjapra.app.config.jwt.JwtMember;
+import jjapra.app.dto.project.AddProjectMemberRequest;
 import jjapra.app.model.member.MemberRole;
 import jjapra.app.config.jwt.JwtProvider;
 //import jjapra.app.dto.project.AddProjectMemberRequest;
 import jjapra.app.dto.project.AddProjectRequest;
 import jjapra.app.model.member.Member;
+import jjapra.app.model.member.Role;
 import jjapra.app.model.project.Project;
 //import jjapra.app.model.project.ProjectMember;
 import jjapra.app.model.project.ProjectMember;
@@ -52,7 +54,7 @@ public class ProjectController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> addProject(@RequestBody AddProjectRequest request) {
+    public ResponseEntity<?> addProject(@RequestBody AddProjectRequest request, @RequestHeader("Authorization") String token) {
         if (request.getTitle().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("title is required");
         }
@@ -61,6 +63,8 @@ public class ProjectController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("already exists title");
         }
         Project savedProject = projectService.save(request);
+        Optional<Member> member = jwtMember.getMember(token);
+        projectMemberService.save(AddProjectMemberRequest.toEntity(savedProject, member.get(), "PL"));
         return ResponseEntity.status(HttpStatus.CREATED).body(savedProject);
     }
 
