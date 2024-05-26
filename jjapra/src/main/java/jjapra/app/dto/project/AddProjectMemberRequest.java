@@ -14,6 +14,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class AddProjectMemberRequest {
+    private String id;
     private String role;
 
     public static ProjectMember toEntity(Project project, Member member, String role) {

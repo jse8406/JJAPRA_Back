@@ -18,10 +18,7 @@ import java.util.Date;
 public class JwtProvider {
     private final SecretKey secretKey = new SecretKeySpec("654a9s8fns156dfg89qg15dfvsd9we95gsdgasf89wegf51a".getBytes(StandardCharsets.UTF_8), SignatureAlgorithm.HS256.getJcaName());
 
-
-//    public JwtProvider(@Value("${jwt.secret}") String secret) {
     public JwtProvider() {
-//        secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), SignatureAlgorithm.HS256.getJcaName());
     }
 
     public String getId(String token) {

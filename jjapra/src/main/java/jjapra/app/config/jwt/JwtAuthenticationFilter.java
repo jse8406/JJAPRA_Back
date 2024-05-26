@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jjapra.app.dto.auth.CustomUserDetails;
 import jjapra.app.model.member.Member;
 import jjapra.app.model.member.MemberRole;
-import jjapra.app.model.member.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

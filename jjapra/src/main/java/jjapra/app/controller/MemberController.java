@@ -1,6 +1,5 @@
 package jjapra.app.controller;
 
-import jakarta.servlet.http.HttpSession;
 import jjapra.app.config.jwt.JwtProvider;
 import jjapra.app.dto.member.AddMemberRequest;
 import jjapra.app.model.member.Member;
@@ -8,12 +7,10 @@ import jjapra.app.service.MemberService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
 import java.util.List;
 import java.util.Optional;
 

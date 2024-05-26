@@ -24,21 +24,26 @@ public class ProjectMemberController {
     private final MemberService memberService;
     private final JwtMember jwtMember;
 
-    @PostMapping("/projects/{id}")
-    public ResponseEntity<ProjectMember> save(@PathVariable("id") Integer id, @RequestBody AddProjectMemberRequest request,
+    @PostMapping("/projects/{projectId}/members")
+    public ResponseEntity<ProjectMember> save(@PathVariable("projectId") Integer id, @RequestBody AddProjectMemberRequest request,
                                               @RequestHeader("Authorization") String token) {
+
+        if (!jwtMember.getMember(token).get().getRole().toString().equals("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
         Optional<Project> project = projectService.findById(id);
         if (project.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
-        Optional<Member> member = jwtMember.getMember(token);
+        Optional<Member> member = memberService.findById(request.getId());
         if (member.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
-        ProjectMember entity = request.toEntity(project.get(), member.get(), request.getRole());
-        projectMemberService.save(entity);
-        return ResponseEntity.status(HttpStatus.CREATED).body(null);
+        ProjectMember entity = AddProjectMemberRequest.toEntity(project.get(), member.get(), request.getRole());
+        ProjectMember projectMember = projectMemberService.save(entity);
+        return ResponseEntity.status(HttpStatus.CREATED).body(projectMember);
     }
 }

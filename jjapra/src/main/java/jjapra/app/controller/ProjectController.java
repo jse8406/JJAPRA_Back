@@ -2,10 +2,8 @@ package jjapra.app.controller;
 
 import jjapra.app.config.jwt.JwtMember;
 import jjapra.app.dto.project.AddProjectMemberRequest;
-import jjapra.app.model.member.MemberRole;
 import jjapra.app.dto.project.AddProjectRequest;
 import jjapra.app.model.member.Member;
-import jjapra.app.model.member.Role;
 import jjapra.app.model.project.Project;
 import jjapra.app.model.project.ProjectMember;
 import jjapra.app.service.MemberService;
@@ -36,10 +34,12 @@ public class ProjectController {
         if (member.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        if (member.get().getRole() == MemberRole.ADMIN) {
+
+        if (member.get().getRole().toString().equals("ADMIN")) {
             List<Project> projects = projectService.findAll();
             return ResponseEntity.status(HttpStatus.OK).body(projects);
         }
+        
         List<ProjectMember> projectMemberList = projectMemberService.findByMemberId(member.get().getId());
         List<Project> projects = projectMemberList.stream().map(ProjectMember::getProject).toList();
         return ResponseEntity.status(HttpStatus.OK).body(projects);
@@ -47,6 +47,11 @@ public class ProjectController {
 
     @PostMapping("")
     public ResponseEntity<?> addProject(@RequestBody AddProjectRequest request, @RequestHeader("Authorization") String token) {
+        Optional<Member> member = jwtMember.getMember(token);
+        if (member.isEmpty() || !member.get().getRole().toString().equals("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("unauthorized");
+        }
+
         if (request.getTitle().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("title is required");
         }
@@ -55,19 +60,31 @@ public class ProjectController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("already exists title");
         }
         Project savedProject = projectService.save(request);
-        Optional<Member> member = jwtMember.getMember(token);
-        projectMemberService.save(AddProjectMemberRequest.toEntity(savedProject, member.get(), "PL"));
+        projectMemberService.save(AddProjectMemberRequest.toEntity(savedProject, member.get(), "ADMIN"));
         return ResponseEntity.status(HttpStatus.CREATED).body(savedProject);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Project> getProject(@PathVariable("id") Integer id, @RequestHeader("Authorization") String token) {
-
-        Optional<Project> project = projectService.findById(id);
-        if (project == null) {
+        Optional<Member> loggedInUser = jwtMember.getMember(token);
+        if (loggedInUser.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(project.get());
+
+        if (loggedInUser.get().getRole().toString().equals("ADMIN")) {
+            Optional<Project> project = projectService.findById(id);
+            if (project.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(project.get());
+        }
+
+        Optional<ProjectMember> projectMember = projectMemberService
+                .findByProjectAndMember(projectService.findById(id).get(), loggedInUser.get());
+        if (projectMember.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(projectMember.get().getProject());
     }
 
     @PutMapping("/{id}")
@@ -77,17 +94,39 @@ public class ProjectController {
         if (member.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-//        if (member.get().getRole() == Role.ADMIN) {
+
+        if (member.get().getRole().toString().equals("ADMIN")) {
             Project updatedProject = projectService.update(id, request);
-//        }
-        if (updatedProject == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.status(HttpStatus.OK).body(updatedProject);
         }
+
+        Optional<ProjectMember> projectMember = projectMemberService
+                .findByProjectAndMember(projectService.findById(id).get(), member.get());
+        if (projectMember.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+        Project updatedProject = projectService.update(id, request);
         return ResponseEntity.status(HttpStatus.OK).body(updatedProject);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Project> deleteProject(@PathVariable("id") Integer id) {
+    public ResponseEntity<Project> deleteProject(@PathVariable("id") Integer id,
+                                                 @RequestHeader("Authorization") String token) {
+        Optional<Member> member = jwtMember.getMember(token);
+        if (member.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        if (member.get().getRole().toString().equals("ADMIN")) {
+            return projectService.deleteProject(id);
+        }
+
+        Optional<ProjectMember> projectMember = projectMemberService
+                .findByProjectAndMember(projectService.findById(id).get(), member.get());
+        if (projectMember.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
         return projectService.deleteProject(id);
     }
 }
