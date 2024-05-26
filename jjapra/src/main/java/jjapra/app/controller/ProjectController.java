@@ -1,21 +1,14 @@
 package jjapra.app.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
-import io.jsonwebtoken.Claims;
-import jakarta.servlet.http.HttpSession;
 import jjapra.app.config.jwt.JwtMember;
 import jjapra.app.dto.project.AddProjectMemberRequest;
 import jjapra.app.model.member.MemberRole;
-import jjapra.app.config.jwt.JwtProvider;
-//import jjapra.app.dto.project.AddProjectMemberRequest;
 import jjapra.app.dto.project.AddProjectRequest;
 import jjapra.app.model.member.Member;
 import jjapra.app.model.member.Role;
 import jjapra.app.model.project.Project;
-//import jjapra.app.model.project.ProjectMember;
 import jjapra.app.model.project.ProjectMember;
 import jjapra.app.service.MemberService;
-//import jjapra.app.service.ProjectMemberService;
 import jjapra.app.service.ProjectMemberService;
 import jjapra.app.service.ProjectService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -79,8 +71,15 @@ public class ProjectController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Project> updateProject(@PathVariable("id") Integer id, @RequestBody AddProjectRequest request) {
-        Project updatedProject = projectService.update(id, request);
+    public ResponseEntity<Project> updateProject(@PathVariable("id") Integer id, @RequestBody AddProjectRequest request,
+                                                 @RequestHeader("Authorization") String token) {
+        Optional<Member> member = jwtMember.getMember(token);
+        if (member.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+//        if (member.get().getRole() == Role.ADMIN) {
+            Project updatedProject = projectService.update(id, request);
+//        }
         if (updatedProject == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }

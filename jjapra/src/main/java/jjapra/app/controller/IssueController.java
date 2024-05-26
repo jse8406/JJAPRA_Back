@@ -49,16 +49,16 @@ public class IssueController {
     @GetMapping("/issues")
     public ResponseEntity<List<Issue>> getIssues(@RequestHeader("Authorization") String token) {
         Optional<Member> loggedInUser = jwtMember.getMember(token);
+        List<Issue> allIssues = issueService.findAll();
+
+        if(loggedInUser.get().getRole().toString().equals("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.OK).body(allIssues);
+        }
 
         List<ProjectMember> projectMemberList = projectMemberService.findByMemberId(loggedInUser.get().getId());
         List<Integer> projectIds = projectMemberList.stream()
                 .map(pm -> pm.getProject().getId())
                 .collect(Collectors.toList());
-
-        List<Issue> allIssues = issueService.findAll();
-        if(loggedInUser.get().getRole().toString().equals("ADMIN")) {
-            return ResponseEntity.status(HttpStatus.OK).body(allIssues);
-        }
 
         List<Issue> filteredIssues = allIssues.stream()
                 .filter(issue -> projectIds.contains(issue.getProjectId()))
