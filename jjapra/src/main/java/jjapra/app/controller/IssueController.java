@@ -33,7 +33,7 @@ public class IssueController {
 
     @PostMapping("projects/{projectId}/issues")
     public ResponseEntity<Issue> addIssue(@RequestBody AddIssueRequest request, @PathVariable("projectId") Integer projectId,
-                                          @RequestHeader("Authorization") String token, HttpSession session) {
+                                          @RequestHeader("Authorization") String token) {
         Optional<Member> loggedInUser = jwtMember.getMember(token);
         if (loggedInUser.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -51,12 +51,14 @@ public class IssueController {
         Optional<Member> loggedInUser = jwtMember.getMember(token);
 
         List<ProjectMember> projectMemberList = projectMemberService.findByMemberId(loggedInUser.get().getId());
-
         List<Integer> projectIds = projectMemberList.stream()
                 .map(pm -> pm.getProject().getId())
                 .collect(Collectors.toList());
 
         List<Issue> allIssues = issueService.findAll();
+        if(loggedInUser.get().getRole().toString().equals("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.OK).body(allIssues);
+        }
 
         List<Issue> filteredIssues = allIssues.stream()
                 .filter(issue -> projectIds.contains(issue.getProjectId()))
