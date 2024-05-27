@@ -4,6 +4,7 @@ import jjapra.app.config.jwt.JwtProvider;
 import jjapra.app.dto.member.AddMemberRequest;
 import jjapra.app.model.member.Member;
 import jjapra.app.service.MemberService;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -36,7 +37,7 @@ public class MemberController {
     }
 
     // 로그인
-    @PostMapping("/login")
+    @PostMapping(value = "/login", produces = "application/json")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         Optional<Member> member = memberService.findById(request.getId());
         if (member.isEmpty()) {
@@ -44,7 +45,8 @@ public class MemberController {
         }
         if (member.get().getPassword().equals(request.getPassword())) {
             String token = jwtProvider.createJwt(member.get().getId(), member.get().getRole().toString());
-            return ResponseEntity.status(HttpStatus.OK).body(token);
+            LoginResponse loginResponse = new LoginResponse(token, member.get());
+            return ResponseEntity.status(HttpStatus.OK).body(loginResponse);
         } else {
             return ResponseEntity.badRequest().body("Invalid password");
         }
@@ -68,4 +70,11 @@ public class MemberController {
 class LoginRequest {
     private String id;
     private String password;
+}
+
+@Getter
+@RequiredArgsConstructor
+class LoginResponse {
+    private final String token;
+    private final Member member;
 }
