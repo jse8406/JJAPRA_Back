@@ -42,6 +42,7 @@ public class ProjectController {
         
         List<ProjectMember> projectMembers = projectMemberService.findByMemberId(member.get().getId());
         List<Project> projects = projectMembers.stream().map(ProjectMember::getProject).toList();
+        projects = projects.stream().distinct().toList();
         return ResponseEntity.status(HttpStatus.OK).body(projects);
     }
 

@@ -1,8 +1,8 @@
-package jjapra.app.model.project;
+package jjapra.app.model.issueMember;
 
 import jakarta.persistence.*;
+import jjapra.app.model.issue.Issue;
 import jjapra.app.model.member.Member;
-import jjapra.app.model.member.Role;
 import lombok.*;
 
 @Data
@@ -11,20 +11,16 @@ import lombok.*;
 @Builder
 @Entity
 @Getter
-public class ProjectMember {
+public class IssueAssignee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "projectId", nullable = false)
-    private Project project;
+    @JoinColumn(name = "issueId", nullable = false)
+    private Issue issue;
 
     @ManyToOne
     @JoinColumn(name = "memberId", nullable = false)
     private Member member;
-
-    @Enumerated(EnumType.STRING)
-    private Role role;
-
 }
