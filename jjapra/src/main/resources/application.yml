@@ -10,6 +10,10 @@ spring:
   datasource:
     url: jdbc:h2:mem:test
 
+  sql:
+    init:
+      mode: never
+
   h2:
     console:
       enabled: true
