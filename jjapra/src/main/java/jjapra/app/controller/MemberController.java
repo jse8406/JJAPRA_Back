@@ -1,5 +1,6 @@
 package jjapra.app.controller;
 
+import jjapra.app.config.jwt.JwtMember;
 import jjapra.app.config.jwt.JwtProvider;
 import jjapra.app.dto.member.AddMemberRequest;
 import jjapra.app.model.member.Member;
@@ -21,6 +22,7 @@ import java.util.Optional;
 public class MemberController {
     private final MemberService memberService;
     private final JwtProvider jwtProvider;
+    private final JwtMember jwtMember;
 
     // 회원가입
     @PostMapping("/join")
@@ -53,14 +55,29 @@ public class MemberController {
     }
 
     // 회원 정보 조회. 회원 ID를 받아서 해당 회원의 정보를 반환
-    @GetMapping("/members/{username}")
-    public Optional<Member> getMember(@PathVariable("username") String id) {
-        return memberService.findById(id);
+    @GetMapping("/members/{id}")
+    public ResponseEntity<Member> getMember(@PathVariable("id") String id,
+                                      @RequestHeader("Authorization") String token) {
+        Optional<Member> member = jwtMember.getMember(token);
+        if (member.isEmpty() || !member.get().getRole().toString().equals("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        return ResponseEntity.ok(memberService.findById(id).orElse(null));
     }
 
     @GetMapping("/members")
-    public List<Member> getMembers() {
-        return memberService.findAll();
+    public ResponseEntity<?> getMembers(@RequestHeader("Authorization") String token) {
+        Optional<Member> member = jwtMember.getMember(token);
+        if (member.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        if (member.get().getRole().toString().equals("ADMIN")) {
+            return ResponseEntity.ok(memberService.findAll());
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(member.get());
     }
 }
 

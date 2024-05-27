@@ -28,10 +28,10 @@ public class DataInitializer implements ApplicationRunner {
     @Transactional
     public void run(ApplicationArguments args) throws Exception {
         Member member1 = Member.builder()
-                .id("test1")
-                .password("test1")
-                .name("test1")
-                .email("test1@naver.com")
+                .id("admin")
+                .password("admin")
+                .name("admin")
+                .email("admin@naver.com")
                 .phone_num("01012345678")
                 .role(MemberRole.ADMIN)
                 .build();
