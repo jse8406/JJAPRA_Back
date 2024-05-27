@@ -6,12 +6,6 @@ spring:
   devtools:
     livereload:
       enabled: true
-  jpa:
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true # 자동으로 data.sql을 프로젝트 실행과 동시에 같이 실행시킨다
-    defer-datasource-initialization: true
 
   datasource:
     url: jdbc:h2:mem:test
