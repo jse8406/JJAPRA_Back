@@ -9,9 +9,11 @@ import jjapra.app.dto.issue.UpdateIssueRequest;
 import jjapra.app.model.issue.Comment;
 import jjapra.app.model.issue.Issue;
 import jjapra.app.model.member.Member;
+import jjapra.app.model.project.Project;
 import jjapra.app.model.project.ProjectMember;
 import jjapra.app.service.IssueService;
 import jjapra.app.service.ProjectMemberService;
+import jjapra.app.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +31,7 @@ import java.util.stream.Collectors;
 public class IssueController {
     private final IssueService issueService;
     private final ProjectMemberService projectMemberService;
+    private final ProjectService projectService;
     private final JwtMember jwtMember;
 
     @PostMapping("projects/{projectId}/issues")
@@ -37,6 +40,12 @@ public class IssueController {
         Optional<Member> loggedInUser = jwtMember.getMember(token);
         if (loggedInUser.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        Optional<Project> project = projectService.findById(projectId);
+        if (!loggedInUser.get().getRole().toString().equals("ADMIN") &&
+            projectMemberService.findByProjectAndMember(project.get(), loggedInUser.get()).isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 
         request.setProjectId(projectId);
@@ -49,6 +58,10 @@ public class IssueController {
     @GetMapping("/issues")
     public ResponseEntity<List<Issue>> getIssues(@RequestHeader("Authorization") String token) {
         Optional<Member> loggedInUser = jwtMember.getMember(token);
+        if (loggedInUser.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
         List<Issue> allIssues = issueService.findAll();
 
         if(loggedInUser.get().getRole().toString().equals("ADMIN")) {
@@ -68,7 +81,7 @@ public class IssueController {
     }
 
     @GetMapping("/issues/details/{id}")
-    public ResponseEntity<IssueDetailsResponse> getIssueDetails(@PathVariable("id") Integer id, HttpSession session) {
+    public ResponseEntity<IssueDetailsResponse> getIssueDetails(@PathVariable("id") Integer id) {
         Issue issue = issueService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid issue Id:" + id));
         List<Comment> comments = issueService.findCommentsByIssueId(id);
