@@ -29,4 +29,7 @@ public class ProjectMemberService {
     public Optional<ProjectMember> findByProjectAndMember(Project project, Member member) {
         return projectMemberRepository.findByProjectAndMember(project, member);
     }
+    public List<ProjectMember> findAll() {
+        return projectMemberRepository.findAll();
+    }
 }

@@ -29,21 +29,20 @@ public class ProjectController {
     private final MemberService memberService;
 
     @GetMapping("")
-    public ResponseEntity<List<Project>> getProjects(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<List<ProjectMember>> getProjects(@RequestHeader("Authorization") String token) {
         Optional<Member> member = jwtMember.getMember(token);
         if (member.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
         if (member.get().getRole().toString().equals("ADMIN")) {
-            List<Project> projects = projectService.findAll();
-            return ResponseEntity.status(HttpStatus.OK).body(projects);
+            List<ProjectMember> projectMembers = projectMemberService.findAll();
+            return ResponseEntity.status(HttpStatus.OK).body(projectMembers);
         }
         
         List<ProjectMember> projectMembers = projectMemberService.findByMemberId(member.get().getId());
-        List<Project> projects = projectMembers.stream().map(ProjectMember::getProject).toList();
-        projects = projects.stream().distinct().toList();
-        return ResponseEntity.status(HttpStatus.OK).body(projects);
+        projectMembers = projectMembers.stream().distinct().toList();
+        return ResponseEntity.status(HttpStatus.OK).body(projectMembers);
     }
 
     @PostMapping("")
