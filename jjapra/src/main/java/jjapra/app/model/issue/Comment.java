@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Comment {
     @Id
+    @Setter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "commentId", updatable = false)
     private Integer commentId;
@@ -44,4 +45,5 @@ public class Comment {
         this.content = content;
         this.createdAt = createdAt != null ? createdAt : LocalDateTime.now();
     }
+
 }

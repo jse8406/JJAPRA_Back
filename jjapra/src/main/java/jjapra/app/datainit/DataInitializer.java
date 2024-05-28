@@ -1,4 +1,4 @@
-package jjapra.app;
+package jjapra.app.datainit;
 
 import jjapra.app.model.issue.Issue;
 import jjapra.app.model.member.Member;
