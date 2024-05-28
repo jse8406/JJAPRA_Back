@@ -1,177 +1,174 @@
 //package com.jjapra.controller;
 //
-//import jjapra.app.controller.MemberController;
-//import jjapra.app.dto.member.AddMemberRequest;
+//import com.fasterxml.jackson.databind.ObjectMapper;
+//import jjapra.app.config.jwt.JwtMember;
+//import jjapra.app.controller.IssueMemberController;
+//import jjapra.app.dto.issue.AddIssueMemberRequest;
+//import jjapra.app.model.issue.Issue;
+//import jjapra.app.model.issueMember.IssueAssignee;
+//import jjapra.app.model.issueMember.IssueFixer;
 //import jjapra.app.model.member.Member;
-//import jjapra.app.service.MemberService;
-//import lombok.Getter;
-//import lombok.RequiredArgsConstructor;
-//import lombok.Setter;
+//import jjapra.app.model.member.MemberRole;
+//import jjapra.app.model.project.Project;
+//import jjapra.app.model.project.ProjectMember;
+//import jjapra.app.service.*;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.DisplayName;
 //import org.junit.jupiter.api.Test;
-//import org.mockito.MockitoAnnotations;
+//import org.mockito.Mockito;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 //import org.springframework.boot.test.context.SpringBootTest;
 //import org.springframework.boot.test.mock.mockito.MockBean;
 //import org.springframework.http.MediaType;
-//import org.springframework.mock.web.MockHttpSession;
 //import org.springframework.test.web.servlet.MockMvc;
 //
-//import java.util.ArrayList;
-//import java.util.List;
+//import java.util.Optional;
 //
 //import static org.mockito.ArgumentMatchers.any;
-//import static org.mockito.Mockito.when;
-//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+//import static org.mockito.ArgumentMatchers.anyInt;
+//import static org.mockito.ArgumentMatchers.anyString;
+//import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 //
-//@SpringBootTest(classes = MemberController.class)
+//@SpringBootTest(classes = IssueMemberController.class)
 //@AutoConfigureMockMvc
-//public class MemberControllerTest {
+//public class IssueMemberControllerTest {
 //
 //    @Autowired
 //    private MockMvc mockMvc;
 //
 //    @MockBean
+//    private IssueFixerService issueFixerService;
+//
+//    @MockBean
+//    private IssueAssigneeService issueAssigneeService;
+//
+//    @MockBean
+//    private IssueService issueService;
+//
+//    @MockBean
 //    private MemberService memberService;
 //
-//    private MockHttpSession session;
+//    @MockBean
+//    private ProjectService projectService;
+//
+//    @MockBean
+//    private ProjectMemberService projectMemberService;
+//
+//    @MockBean
+//    private JwtMember jwtMember;
+//
+//    private ObjectMapper objectMapper;
+//    private Member plMember;
+//    private Project project;
+//    private Issue issue;
 //
 //    @BeforeEach
-//    public void setup() {
-//        MockitoAnnotations.openMocks(this);
-//        session = new MockHttpSession();
+//    void setUp() {
+//        objectMapper = new ObjectMapper();
+//
+//        plMember = new Member();
+//        plMember.setId("plMember");
+//        plMember.setRole(MemberRole.valueOf("PL"));
+//
+//        Member userMember = new Member();
+//        userMember.setId("user");
+//        userMember.setRole(MemberRole.valueOf("USER"));
+//
+//        project = new Project();
+//        project.setId(1);
+//
+//        issue = new Issue();
+//        issue.setIssueId(1);
+//        issue.setProjectId(1);
 //    }
 //
-//    @DisplayName("Success register member")
+//    @DisplayName("Success save Issue Fixer")
 //    @Test
-//    public void testRegisterMember() throws Exception {
-//        AddMemberRequest request = new AddMemberRequest();
-//        request.setId("testUser");
-//        request.setPassword("password");
-//
-//        when(memberService.findById("testUser")).thenReturn(null);
-//
-//        mockMvc.perform(post("/join")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content("{\"id\":\"testUser\", \"password\":\"password\"}"))
-//                .andExpect(status().isOk());
-//    }
-//
-//    @DisplayName("Fail register member with existing ID")
-//    @Test
-//    public void testRegisterMemberWithExistingId() throws Exception {
-//        AddMemberRequest request = new AddMemberRequest();
-//        request.setId("testUser");
-//        request.setPassword("password");
-//
-//        Member existingMember = new Member();
-//        existingMember.setId("testUser");
-//
-//        when(memberService.findById("testUser")).thenReturn(existingMember);
-//
-//        mockMvc.perform(post("/join")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content("{\"id\":\"testUser\", \"password\":\"password\"}"))
-//                .andExpect(status().isBadRequest());
-//    }
-//
-//    @DisplayName("Success login")
-//    @Test
-//    public void testLogin() throws Exception {
-//        LoginRequest request = new LoginRequest();
-//        request.setId("testUser");
-//        request.setPassword("password");
+//    void testSaveIssueFixer() throws Exception {
+//        AddIssueMemberRequest request = new AddIssueMemberRequest();
+//        request.setId("user");
+//        request.setRole("FIXER");
 //
 //        Member member = new Member();
-//        member.setId("testUser");
-//        member.setPassword("password");
+//        member.setId("user");
 //
-//        when(memberService.findById("testUser")).thenReturn(member);
+//        Mockito.when(jwtMember.getMember(anyString())).thenReturn(Optional.of(plMember));
+//        Mockito.when(issueService.findById(anyInt())).thenReturn(Optional.of(issue));
+//        Mockito.when(projectService.findById(anyInt())).thenReturn(Optional.of(project));
+//        Mockito.when(projectMemberService.findByProjectAndMember(any(Project.class), any(Member.class)))
+//                .thenReturn(Optional.of(new ProjectMember()));
+//        Mockito.when(memberService.findById(anyString())).thenReturn(Optional.of(member));
+//        Mockito.when(issueFixerService.save(any(IssueFixer.class))).thenReturn(new IssueFixer(issue, member));
 //
-//        mockMvc.perform(post("/login")
+//        mockMvc.perform(post("/issues/1/members")
 //                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content("{\"id\":\"testUser\", \"password\":\"password\"}")
-//                        .session(session))
-//                .andExpect(status().isOk());
+//                        .content(objectMapper.writeValueAsString(request))
+//                        .header("Authorization", "Bearer token")
+//                        .with(csrf()))
+//                .andExpect(status().isCreated());
 //    }
 //
-//    @DisplayName("Fail login with incorrect ID")
+//    @DisplayName("Success save Issue Assignee")
 //    @Test
-//    public void testLoginWithIncorrectId() throws Exception {
-//        LoginRequest request = new LoginRequest();
-//        request.setId("testUser");
-//        request.setPassword("password");
-//
-//        when(memberService.findById("testUser")).thenReturn(null);
-//
-//        mockMvc.perform(post("/login")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content("{\"id\":\"testUser\", \"password\":\"password\"}")
-//                        .session(session))
-//                .andExpect(status().isBadRequest());
-//    }
-//
-//    @DisplayName("Fail login with incorrect password")
-//    @Test
-//    public void testLoginWithIncorrectPassword() throws Exception {
-//        LoginRequest request = new LoginRequest();
-//        request.setId("testUser");
-//        request.setPassword("wrongPassword");
+//    void testSaveIssueAssignee() throws Exception {
+//        AddIssueMemberRequest request = new AddIssueMemberRequest();
+//        request.setId("user");
+//        request.setRole("ASSIGNEE");
 //
 //        Member member = new Member();
-//        member.setId("testUser");
-//        member.setPassword("password");
+//        member.setId("user");
 //
-//        when(memberService.findById("testUser")).thenReturn(member);
+//        Mockito.when(jwtMember.getMember(anyString())).thenReturn(Optional.of(plMember));
+//        Mockito.when(issueService.findById(anyInt())).thenReturn(Optional.of(issue));
+//        Mockito.when(projectService.findById(anyInt())).thenReturn(Optional.of(project));
+//        Mockito.when(projectMemberService.findByProjectAndMember(any(Project.class), any(Member.class)))
+//                .thenReturn(Optional.of(new ProjectMember()));
+//        Mockito.when(memberService.findById(anyString())).thenReturn(Optional.of(member));
+//        Mockito.when(issueAssigneeService.save(any(IssueAssignee.class))).thenReturn(new IssueAssignee(issue, member));
 //
-//        mockMvc.perform(post("/login")
+//        mockMvc.perform(post("/issues/1/members")
 //                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content("{\"id\":\"testUser\", \"password\":\"wrongPassword\"}")
-//                        .session(session))
-//                .andExpect(status().isBadRequest());
+//                        .content(objectMapper.writeValueAsString(request))
+//                        .header("Authorization", "Bearer token")
+//                        .with(csrf()))
+//                .andExpect(status().isCreated());
 //    }
 //
-//    @DisplayName("Success get member by id")
+//    @DisplayName("Fail save Issue Member with unauthorized user")
 //    @Test
-//    public void testGetMemberById() throws Exception {
-//        Member member = new Member();
-//        member.setId("testUser");
+//    void testSaveIssueMemberUnauthorized() throws Exception {
+//        AddIssueMemberRequest request = new AddIssueMemberRequest();
+//        request.setId("user");
+//        request.setRole("FIXER");
 //
-//        when(memberService.findById("testUser")).thenReturn(member);
+//        Mockito.when(jwtMember.getMember(anyString())).thenReturn(Optional.empty());
 //
-//        mockMvc.perform(get("/members/testUser")
-//                        .session(session))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.id").value(member.getId()));
+//        mockMvc.perform(post("/issues/1/members")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(objectMapper.writeValueAsString(request))
+//                        .header("Authorization", "Bearer token")
+//                        .with(csrf()))
+//                .andExpect(status().isUnauthorized());
 //    }
 //
-//    @DisplayName("Success get all members")
+//    @DisplayName("Fail save Issue Member with invalid issue ID")
 //    @Test
-//    public void testGetAllMembers() throws Exception {
-//        List<Member> members = new ArrayList<>();
-//        Member member1 = new Member();
-//        member1.setId("testUser1");
-//        Member member2 = new Member();
-//        member2.setId("testUser2");
-//        members.add(member1);
-//        members.add(member2);
+//    void testSaveIssueMemberInvalidIssue() throws Exception {
+//        AddIssueMemberRequest request = new AddIssueMemberRequest();
+//        request.setId("user");
+//        request.setRole("FIXER");
 //
-//        when(memberService.findAll()).thenReturn(members);
+//        Mockito.when(jwtMember.getMember(anyString())).thenReturn(Optional.of(plMember));
+//        Mockito.when(issueService.findById(anyInt())).thenReturn(Optional.empty());
 //
-//        mockMvc.perform(get("/members")
-//                        .session(session))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$[0].id").value(member1.getId()))
-//                .andExpect(jsonPath("$[1].id").value(member2.getId()));
+//        mockMvc.perform(post("/issues/1/members")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(objectMapper.writeValueAsString(request))
+//                        .header("Authorization", "Bearer token")
+//                        .with(csrf()))
+//                .andExpect(status().isNotFound());
 //    }
-//}
-//
-//@Getter
-//@Setter
-//class LoginRequest {
-//    private String id;
-//    private String password;
 //}
