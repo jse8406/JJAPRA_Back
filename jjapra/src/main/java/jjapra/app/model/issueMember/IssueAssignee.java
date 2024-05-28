@@ -23,4 +23,10 @@ public class IssueAssignee {
     @ManyToOne
     @JoinColumn(name = "memberId", nullable = false)
     private Member member;
+
+    @Builder
+    public IssueAssignee(Issue issue, Member member) {
+        this.issue = issue;
+        this.member = member;
+    }
 }

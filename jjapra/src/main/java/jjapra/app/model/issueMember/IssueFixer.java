@@ -23,4 +23,12 @@ public class IssueFixer {
     @ManyToOne
     @JoinColumn(name = "memberId", nullable = false)
     private Member member;
+
+    @Builder
+    public IssueFixer(Issue issue, Member member) {
+        this.issue = issue;
+        this.member = member;
+    }
+
+
 }
