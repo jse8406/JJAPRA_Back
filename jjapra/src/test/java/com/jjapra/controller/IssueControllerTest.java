@@ -12,6 +12,7 @@ import jjapra.app.model.issue.Issue;
 import jjapra.app.model.member.Member;
 import jjapra.app.model.member.MemberRole;
 import jjapra.app.model.project.Project;
+import jjapra.app.model.project.ProjectMember;
 import jjapra.app.service.IssueService;
 import jjapra.app.service.ProjectMemberService;
 import jjapra.app.service.ProjectService;
@@ -139,23 +140,14 @@ public class IssueControllerTest {
         issue.setTitle("Test Issue");
         issue.setDescription("Test Description");
 
-        Comment comment = new Comment();
-//        comment.setId(1);
-        comment.setContent("Test Comment");
-
-        List<Comment> comments = List.of(comment);
-
         Mockito.when(issueService.findById(anyInt())).thenReturn(Optional.of(issue));
-        Mockito.when(issueService.findCommentsByIssueId(anyInt())).thenReturn(comments);
-
-        IssueDetailsResponse response = new IssueDetailsResponse(issue.getTitle(), issue.getDescription(), comments);
 
         mockMvc.perform(get("/issues/details/1")
                         .header("Authorization", "Bearer token"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value(response.getTitle()))
-                .andExpect(jsonPath("$.description").value(response.getDescription()))
-                .andExpect(jsonPath("$.comments[0].content").value(comments.get(0).getContent()));
+                .andExpect(jsonPath("$.issueId").value(issue.getIssueId()))
+                .andExpect(jsonPath("$.title").value(issue.getTitle()))
+                .andExpect(jsonPath("$.description").value(issue.getDescription()));
     }
 
     @Test
@@ -188,6 +180,10 @@ public class IssueControllerTest {
 
         List<Issue> issues = List.of(issue);
 
+        Mockito.when(jwtMember.getMember(anyString())).thenReturn(Optional.of(adminMember));
+        Mockito.when(projectService.findById(anyInt())).thenReturn(Optional.of(project));
+        Mockito.when(projectMemberService.findByProjectAndMember(any(Project.class), any(Member.class)))
+                .thenReturn(Optional.of(new ProjectMember()));
         Mockito.when(issueService.findByProjectId(anyInt())).thenReturn(issues);
 
         mockMvc.perform(get("/projects/1/issues")
@@ -198,18 +194,28 @@ public class IssueControllerTest {
                 .andExpect(jsonPath("$[0].description").value(issue.getDescription()));
     }
 
+
     @Test
     void testUpdateIssue() throws Exception {
         UpdateIssueRequest updateIssueRequest = new UpdateIssueRequest();
         updateIssueRequest.setTitle("Updated Title");
         updateIssueRequest.setDescription("Updated Description");
 
+        Issue existingIssue = new Issue();
+        existingIssue.setIssueId(1);
+        existingIssue.setProjectId(1);
+
         Issue updatedIssue = new Issue();
         updatedIssue.setIssueId(1);
         updatedIssue.setTitle("Updated Title");
         updatedIssue.setDescription("Updated Description");
 
+        Mockito.when(jwtMember.getMember(anyString())).thenReturn(Optional.of(adminMember));
+        Mockito.when(issueService.findById(anyInt())).thenReturn(Optional.of(existingIssue));
         Mockito.when(issueService.updateIssue(anyInt(), any(UpdateIssueRequest.class))).thenReturn(updatedIssue);
+        Mockito.when(projectService.findById(anyInt())).thenReturn(Optional.of(project));
+        Mockito.when(projectMemberService.findByProjectAndMember(any(Project.class), any(Member.class)))
+                .thenReturn(Optional.of(new ProjectMember()));
 
         mockMvc.perform(patch("/issues/1")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -220,12 +226,24 @@ public class IssueControllerTest {
                 .andExpect(jsonPath("$.description").value(updatedIssue.getDescription()));
     }
 
+
     @Test
     void testDeleteIssue() throws Exception {
+        Issue issue = new Issue();
+        issue.setIssueId(1);
+        issue.setProjectId(1);
+
+        Mockito.when(jwtMember.getMember(anyString())).thenReturn(Optional.of(adminMember));
+        Mockito.when(issueService.findById(anyInt())).thenReturn(Optional.of(issue));
+        Mockito.when(projectService.findById(anyInt())).thenReturn(Optional.of(project));
+        Mockito.when(projectMemberService.findByProjectAndMember(any(Project.class), any(Member.class)))
+                .thenReturn(Optional.of(new ProjectMember()));
+
         Mockito.doNothing().when(issueService).deleteIssue(anyInt());
 
         mockMvc.perform(delete("/issues/1")
                         .header("Authorization", "Bearer token"))
                 .andExpect(status().isNoContent());
     }
+
 }
