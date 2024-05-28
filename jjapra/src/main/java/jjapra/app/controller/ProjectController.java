@@ -4,12 +4,17 @@ import jjapra.app.config.jwt.JwtMember;
 import jjapra.app.dto.project.AddProjectMemberRequest;
 import jjapra.app.dto.project.AddProjectRequest;
 import jjapra.app.model.member.Member;
+import jjapra.app.model.member.MemberRole;
+import jjapra.app.model.member.Role;
 import jjapra.app.model.project.Project;
 import jjapra.app.model.project.ProjectMember;
+import jjapra.app.response.GetProjectResponse;
+import jjapra.app.service.IssueService;
 import jjapra.app.service.MemberService;
 import jjapra.app.service.ProjectMemberService;
 import jjapra.app.service.ProjectService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,23 +32,33 @@ public class ProjectController {
     private final JwtMember jwtMember;
     private final ProjectMemberService projectMemberService;
     private final MemberService memberService;
+    private final IssueService issueService;
 
     @GetMapping("")
-    public ResponseEntity<List<ProjectMember>> getProjects(@RequestHeader("Authorization") String token) {
-        Optional<Member> member = jwtMember.getMember(token);
-        if (member.isEmpty()) {
+    public ResponseEntity<List<GetProjectResponse>> getProjects(@RequestHeader("Authorization") String token) {
+        Optional<Member> loggedInUser = jwtMember.getMember(token);
+        if (loggedInUser.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
-        if (member.get().getRole().toString().equals("ADMIN")) {
-            List<ProjectMember> projectMembers = projectMemberService.findAll();
-            projectMembers = projectMembers.stream().distinct().toList();
-            return ResponseEntity.status(HttpStatus.OK).body(projectMembers);
+        if (loggedInUser.get().getRole().toString().equals("ADMIN")) {
+            List<Project> projects = projectService.findAll();
+            List<GetProjectResponse> response = projects.stream().map(project -> {
+                List<ProjectMember> projectMembers = projectMemberService.findByProject(project);
+                List<String> members = projectMembers.stream().map(pm -> pm.getMember().getId()).toList();
+                return new GetProjectResponse(project, Role.valueOf("ADMIN"), members);
+            }).toList();
+            return ResponseEntity.status(HttpStatus.OK).body(response);
         }
         
-        List<ProjectMember> projectMembers = projectMemberService.findByMemberId(member.get().getId());
-        projectMembers = projectMembers.stream().distinct().toList();
-        return ResponseEntity.status(HttpStatus.OK).body(projectMembers);
+        List<ProjectMember> projectMembers = projectMemberService.findByMemberId(loggedInUser.get().getId());
+        List<GetProjectResponse> response = projectMembers.stream().map(projectMember -> {
+            Project project = projectMember.getProject();
+            List<ProjectMember> projectMemberList = projectMemberService.findByProject(project);
+            List<String> members = projectMemberList.stream().map(pm -> pm.getMember().getId()).toList();
+            return new GetProjectResponse(project, projectMember.getRole(), members);
+        }).toList();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping("")
@@ -122,7 +137,11 @@ public class ProjectController {
         }
 
         if (member.get().getRole().toString().equals("ADMIN")) {
-            return projectService.deleteProject(id);
+            issueService.findCommentByProjectId(id).forEach(issueService::deleteComment);
+            issueService.findByProjectId(id).forEach(issueService::deleteIssue);
+            projectMemberService.findByProject(projectService.findById(id).get()).forEach(projectMemberService::delete);
+            projectService.deleteProject(id);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
         }
 
         Optional<ProjectMember> projectMember = projectMemberService
@@ -130,8 +149,11 @@ public class ProjectController {
         if (projectMember.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
-
-        return projectService.deleteProject(id);
+        issueService.findCommentByProjectId(id).forEach(issueService::deleteComment);
+        issueService.findByProjectId(id).forEach(issueService::deleteIssue);
+        projectMemberService.findByProject(projectService.findById(id).get()).forEach(projectMemberService::delete);
+        projectService.deleteProject(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 }
 

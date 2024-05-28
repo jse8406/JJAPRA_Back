@@ -35,16 +35,20 @@ public class IssueService {
         return issueRepository.findByProjectId(projectId);
     }
 
+    public List<Comment> findCommentByProjectId(Integer projectId) {
+        return commentRepository.findByIssue_ProjectId(projectId);
+    }
+
     public List<Comment> findCommentsByIssueId(Integer issueId) {
         Issue issue = issueRepository.findById(issueId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid issue Id:" + issueId));
         return commentRepository.findByIssue_IssueId(issueId);
     }
 
-    public Comment addComment(Integer issueId, AddCommentRequest request) {
+    public Comment addComment(Integer issueId, AddCommentRequest request, String userId) {
         Issue issue = issueRepository.findById(issueId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid issue Id:" + issueId));
-        Comment comment = request.toEntity(issue);
+        Comment comment = request.toEntity(issue, userId);
         return commentRepository.save(comment);
     }
     public Issue updateIssue(Integer issueId, UpdateIssueRequest request) {
@@ -73,5 +77,11 @@ public class IssueService {
         issueRepository.delete(issue);
     }
 
+    public void deleteIssue(Issue issue) {
+        issueRepository.delete(issue);
+    }
 
+    public void deleteComment(Comment comment) {
+        commentRepository.delete(comment);
+    }
 }

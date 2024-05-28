@@ -1,10 +1,8 @@
 package jjapra.app.controller;
 
-import jakarta.servlet.http.HttpSession;
 import jjapra.app.config.jwt.JwtMember;
 import jjapra.app.dto.issue.AddCommentRequest;
 import jjapra.app.dto.issue.AddIssueRequest;
-import jjapra.app.dto.issue.IssueDetailsResponse;
 import jjapra.app.dto.issue.UpdateIssueRequest;
 import jjapra.app.model.issue.Comment;
 import jjapra.app.model.issue.Issue;
@@ -15,7 +13,6 @@ import jjapra.app.service.IssueService;
 import jjapra.app.service.ProjectMemberService;
 import jjapra.app.service.ProjectService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -97,8 +94,8 @@ public class IssueController {
         if (loggedInUser.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        request.setWriterId(loggedInUser.get().getId());
-        Comment savedComment = issueService.addComment(issueId,request);
+
+        Comment savedComment = issueService.addComment(issueId, request, loggedInUser.get().getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(savedComment);
     }
 

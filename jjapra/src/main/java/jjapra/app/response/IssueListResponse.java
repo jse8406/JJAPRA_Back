@@ -1,4 +1,4 @@
-package jjapra.app.dto.issue;
+package jjapra.app.response;
 
 
 import jjapra.app.model.issue.Issue;

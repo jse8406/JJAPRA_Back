@@ -39,7 +39,8 @@ public class WebSecurityConfig {
 
             configuration.setAllowedMethods(Collections.singletonList("*"));
             configuration.setAllowedOrigins(Arrays.asList("http://127.0.0.1:5500", "http://127.0.0.1:3000",
-                    "http://localhost:5500", "http://localhost:3000"));
+                    "http://localhost:5500", "http://localhost:3000",
+                    "http://suzzang2.kro.kr/", "http://suzzang2.kro.kr"));
             configuration.setAllowedHeaders(Collections.singletonList("*"));
             configuration.setAllowCredentials(true);
             configuration.setMaxAge(3600L);

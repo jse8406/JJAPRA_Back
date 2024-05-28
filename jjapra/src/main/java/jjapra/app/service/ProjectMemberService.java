@@ -26,6 +26,9 @@ public class ProjectMemberService {
     public List<ProjectMember> findByMemberId(String id) {
         return projectMemberRepository.findByMemberId(id);
     }
+    public List<ProjectMember> findByProject(Project project) {
+        return projectMemberRepository.findByProject(project);
+    }
     public Optional<ProjectMember> findByProjectAndMember(Project project, Member member) {
         return projectMemberRepository.findByProjectAndMember(project, member);
     }

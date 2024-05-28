@@ -13,9 +13,8 @@ import lombok.Setter;
 @Setter
 public class AddCommentRequest {
     private String content;
-    private String writerId;
 
-    public Comment toEntity(Issue issue){
+    public Comment toEntity(Issue issue, String writerId){
         return Comment.builder()
                 .content(content)
                 .writerId(writerId)

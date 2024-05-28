@@ -5,7 +5,6 @@ import jjapra.app.config.jwt.JwtMember;
 import jjapra.app.controller.IssueController;
 import jjapra.app.dto.issue.AddCommentRequest;
 import jjapra.app.dto.issue.AddIssueRequest;
-import jjapra.app.dto.issue.IssueDetailsResponse;
 import jjapra.app.dto.issue.UpdateIssueRequest;
 import jjapra.app.model.issue.Comment;
 import jjapra.app.model.issue.Issue;
@@ -160,7 +159,7 @@ public class IssueControllerTest {
         savedComment.setContent("Test Comment");
 
         Mockito.when(jwtMember.getMember(anyString())).thenReturn(Optional.of(adminMember));
-        Mockito.when(issueService.addComment(anyInt(), any(AddCommentRequest.class))).thenReturn(savedComment);
+        Mockito.when(issueService.addComment(anyInt(), any(AddCommentRequest.class), anyString())).thenReturn(savedComment);
 
         mockMvc.perform(post("/comments/1")
                         .contentType(MediaType.APPLICATION_JSON)
