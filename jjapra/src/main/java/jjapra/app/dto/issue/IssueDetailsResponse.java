@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 public class IssueDetailsResponse {
-    private Issue issue;
+    private String title;
+    private String description;
     private List<Comment> comments;
 }
