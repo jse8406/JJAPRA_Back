@@ -42,6 +42,9 @@ public class ProjectMemberController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
+        Optional<ProjectMember> pm = projectMemberService.findByProjectAndMember(project.get(), member.get());
+        pm.ifPresent(projectMemberService::delete);
+
         ProjectMember entity = AddProjectMemberRequest.toEntity(project.get(), member.get(), request.getRole());
         ProjectMember projectMember = projectMemberService.save(entity);
         return ResponseEntity.status(HttpStatus.CREATED).body(projectMember);

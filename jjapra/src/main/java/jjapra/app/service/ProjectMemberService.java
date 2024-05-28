@@ -32,4 +32,7 @@ public class ProjectMemberService {
     public List<ProjectMember> findAll() {
         return projectMemberRepository.findAll();
     }
+    public void delete(ProjectMember projectMember) {
+        projectMemberRepository.delete(projectMember);
+    }
 }
