@@ -37,6 +37,7 @@ public class ProjectController {
 
         if (member.get().getRole().toString().equals("ADMIN")) {
             List<ProjectMember> projectMembers = projectMemberService.findAll();
+            projectMembers = projectMembers.stream().distinct().toList();
             return ResponseEntity.status(HttpStatus.OK).body(projectMembers);
         }
         
