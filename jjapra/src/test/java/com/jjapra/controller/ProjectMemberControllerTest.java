@@ -70,7 +70,7 @@ public class ProjectMemberControllerTest {
     public void testSaveProjectMember() throws Exception {
         AddProjectMemberRequest request = new AddProjectMemberRequest();
         request.setId("testMemberId");
-        request.setRole("USER");
+        request.setRole("TESTER");
 
         Project project = new Project();
         project.setId(1);
