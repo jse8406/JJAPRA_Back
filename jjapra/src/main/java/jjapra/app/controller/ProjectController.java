@@ -97,8 +97,11 @@ public class ProjectController {
         }
 
         if (member.get().getRole().toString().equals("ADMIN")) {
-            Project updatedProject = projectService.update(id, request);
-            return ResponseEntity.status(HttpStatus.OK).body(updatedProject);
+            Optional<Project> updatedProject = Optional.ofNullable(projectService.update(id, request));
+            if (updatedProject.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(updatedProject.get());
         }
 
         Optional<ProjectMember> projectMember = projectMemberService
