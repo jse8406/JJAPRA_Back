@@ -144,16 +144,7 @@ public class ProjectController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
         }
 
-        Optional<ProjectMember> projectMember = projectMemberService
-                .findByProjectAndMember(projectService.findById(id).get(), member.get());
-        if (projectMember.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
-        issueService.findCommentByProjectId(id).forEach(issueService::deleteComment);
-        issueService.findByProjectId(id).forEach(issueService::deleteIssue);
-        projectMemberService.findByProject(projectService.findById(id).get()).forEach(projectMemberService::delete);
-        projectService.deleteProject(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
     }
 }
 

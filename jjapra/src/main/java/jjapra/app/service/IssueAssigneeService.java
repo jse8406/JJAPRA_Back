@@ -5,6 +5,7 @@ import jjapra.app.repository.IssueAssigneeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -14,5 +15,12 @@ public class IssueAssigneeService {
 
     public IssueAssignee save(IssueAssignee issueAssignee) {
         return issueAssigneeRepository.save(issueAssignee);
+    }
+
+    public Optional<IssueAssignee> findByIssueId(Integer issueId) {
+        return issueAssigneeRepository.findByIssue_IssueId(issueId);
+    }
+    public void delete(IssueAssignee issueAssignee) {
+        issueAssigneeRepository.delete(issueAssignee);
     }
 }

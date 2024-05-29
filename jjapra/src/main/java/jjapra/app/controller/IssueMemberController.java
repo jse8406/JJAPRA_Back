@@ -47,23 +47,26 @@ public class IssueMemberController {
         Optional<ProjectMember> projectMember = projectMemberService.findByProjectAndMember(
                 projectService.findById(issueService.findById(issueId).get().getProjectId()).get(),
                 loggedInUser.get());
-        if (projectMember.isEmpty() || !projectMember.get().getRole().toString().equals("PL")) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        if (projectMember.isPresent() && (projectMember.get().getRole().toString().equals("PL")
+                || projectMember.get().getRole().toString().equals("ADMIN"))) {
+            Optional<Member> member = memberService.findById(request.getId());
+            if (member.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+
+            if (request.getRole().equals("FIXER")) {
+                issueFixerService.findByIssueId(issueId).ifPresent(issueFixerService::delete);
+                return ResponseEntity.status(HttpStatus.CREATED).body(issueFixerService
+                        .save(IssueFixer.builder().issue(issue.get()).member(member.get()).build()));
+            } else if (request.getRole().equals("ASSIGNEE")) {
+                issueAssigneeService.findByIssueId(issueId).ifPresent(issueAssigneeService::delete);
+                return ResponseEntity.status(HttpStatus.CREATED).body(issueAssigneeService
+                        .save(IssueAssignee.builder().issue(issue.get()).member(member.get()).build()));
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            }
         }
 
-        Optional<Member> member = memberService.findById(request.getId());
-        if (member.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-
-        if (request.getRole().equals("FIXER")) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(issueFixerService
-                    .save(IssueFixer.builder().issue(issue.get()).member(member.get()).build()));
-        } else if (request.getRole().equals("ASSIGNEE")) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(issueAssigneeService
-                    .save(IssueAssignee.builder().issue(issue.get()).member(member.get()).build()));
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
     }
 }

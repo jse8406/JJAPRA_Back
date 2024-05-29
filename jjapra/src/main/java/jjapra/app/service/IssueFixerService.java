@@ -15,4 +15,10 @@ public class IssueFixerService {
     public IssueFixer save(IssueFixer issueFixer) {
         return issueFixerRepository.save(issueFixer);
     }
+    public Optional<IssueFixer> findByIssueId(Integer issueId) {
+        return issueFixerRepository.findByIssue_IssueId(issueId);
+    }
+    public void delete(IssueFixer issueFixer) {
+        issueFixerRepository.delete(issueFixer);
+    }
 }

@@ -37,6 +37,15 @@ public class DataInitializer implements ApplicationRunner {
                 .build();
 
         Member member2 = Member.builder()
+                .id("test1")
+                .password("test1")
+                .name("test1")
+                .email("test1@naver.com")
+                .phone_num("01011112222")
+                .role(MemberRole.USER)
+                .build();
+
+        Member member3 = Member.builder()
                 .id("test2")
                 .password("test2")
                 .name("test2")
@@ -45,8 +54,19 @@ public class DataInitializer implements ApplicationRunner {
                 .role(MemberRole.USER)
                 .build();
 
+        Member member4 = Member.builder()
+                .id("test3")
+                .password("test3")
+                .name("test3")
+                .email("test3@naver.com")
+                .phone_num("01011112222")
+                .role(MemberRole.USER)
+                .build();
+
         memberRepository.save(member1);
         memberRepository.save(member2);
+        memberRepository.save(member3);
+        memberRepository.save(member4);
 
         Project project1 = Project.builder()
                 .title("DDing")

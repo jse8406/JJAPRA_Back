@@ -2,6 +2,7 @@ package jjapra.app.response;
 
 import jjapra.app.model.issue.Comment;
 import jjapra.app.model.issue.Issue;
+import jjapra.app.model.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 public class IssueDetailsResponse {
-    private String title;
-    private String description;
-    private List<Comment> comments;
+    private Issue issue;
+    private Member fixer;
+    private Member assignee;
 }
