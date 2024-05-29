@@ -3,12 +3,15 @@ package jjapra.app.controller;
 import jjapra.app.config.jwt.JwtMember;
 import jjapra.app.dto.project.AddProjectMemberRequest;
 import jjapra.app.dto.project.AddProjectRequest;
+import jjapra.app.model.issue.Issue;
 import jjapra.app.model.member.Member;
 import jjapra.app.model.member.MemberRole;
 import jjapra.app.model.member.Role;
 import jjapra.app.model.project.Project;
 import jjapra.app.model.project.ProjectMember;
 import jjapra.app.response.GetProjectResponse;
+import jjapra.app.response.Pairs;
+import jjapra.app.response.ProjectDetailsResponse;
 import jjapra.app.service.IssueService;
 import jjapra.app.service.MemberService;
 import jjapra.app.service.ProjectMemberService;
@@ -81,18 +84,10 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Project> getProject(@PathVariable("id") Integer id, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<ProjectDetailsResponse> getProject(@PathVariable("id") Integer id, @RequestHeader("Authorization") String token) {
         Optional<Member> loggedInUser = jwtMember.getMember(token);
         if (loggedInUser.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-
-        if (loggedInUser.get().getRole().toString().equals("ADMIN")) {
-            Optional<Project> project = projectService.findById(id);
-            if (project.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-            }
-            return ResponseEntity.status(HttpStatus.OK).body(project.get());
         }
 
         Optional<ProjectMember> projectMember = projectMemberService
@@ -100,7 +95,14 @@ public class ProjectController {
         if (projectMember.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(projectMember.get().getProject());
+
+        List<ProjectMember> pmList = projectMemberService.findByProject(projectService.findById(id).get());
+        List<Pairs<String, String>> memberRoles = pmList.stream().map(pm ->
+                new Pairs<>(pm.getMember().getId(), pm.getRole().toString())).toList();
+        List<Issue> issues = issueService.findByProjectId(id);
+        ProjectDetailsResponse response = new ProjectDetailsResponse(
+                projectService.findById(id).get(), issues, memberRoles);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PutMapping("/{id}")
