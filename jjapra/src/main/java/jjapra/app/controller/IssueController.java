@@ -87,23 +87,27 @@ public class IssueController {
         if (loggedInUser.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-
         Optional<Issue> issue = issueService.findById(issueId);
         if (issue.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-
         Optional<ProjectMember> pm = projectMemberService.findByProjectAndMember(
                 projectService.findById(issue.get().getProjectId()).get(), loggedInUser.get());
+        System.out.println(pm);
         if (pm.isPresent()) {
             Optional<IssueAssignee> issueAssignee = issueAssigneeService.findByIssueId(issueId);
             Optional<IssueFixer> issueFixer = issueFixerService.findByIssueId(issueId);
+            if(issueAssignee.isEmpty() || issueFixer.isEmpty()) {
+                IssueDetailsResponse response = new IssueDetailsResponse(issue.get());
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
             IssueDetailsResponse response =
                     new IssueDetailsResponse(issue.get(), issueAssignee.get().getMember(), issueFixer.get().getMember());
             return ResponseEntity.status(HttpStatus.OK).body(response);
+        } else {
+            // Handle the case where either the issueAssignee or issueFixer is not present
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
     }
 
     @PostMapping("/issues/{issueId}/comments")
