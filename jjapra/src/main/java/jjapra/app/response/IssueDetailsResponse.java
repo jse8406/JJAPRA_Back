@@ -15,8 +15,8 @@ import java.util.List;
 @Getter
 public class IssueDetailsResponse {
     private Issue issue;
-    private Member fixer;
-    private Member assignee;
+    private String fixer;
+    private String assignee;
 
     public IssueDetailsResponse(Issue issue) {
         this.issue = issue;

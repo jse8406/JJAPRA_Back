@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface IssueAssigneeRepository extends JpaRepository<IssueAssignee, Long> {
+public interface IssueAssigneeRepository extends JpaRepository<IssueAssignee, Long > {
     Optional<IssueAssignee> findByIssue_IssueId(Integer issueId);
 }

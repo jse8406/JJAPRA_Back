@@ -97,12 +97,12 @@ public class IssueController {
         if (pm.isPresent()) {
             Optional<IssueAssignee> issueAssignee = issueAssigneeService.findByIssueId(issueId);
             Optional<IssueFixer> issueFixer = issueFixerService.findByIssueId(issueId);
-            if(issueAssignee.isEmpty() || issueFixer.isEmpty()) {
-                IssueDetailsResponse response = new IssueDetailsResponse(issue.get());
+            if(!issueAssignee.isEmpty()) {
+                IssueDetailsResponse response = new IssueDetailsResponse(issue.get(), issueAssignee.get().getMember().getId(), "Fixer");
                 return ResponseEntity.status(HttpStatus.OK).body(response);
             }
             IssueDetailsResponse response =
-                    new IssueDetailsResponse(issue.get(), issueAssignee.get().getMember(), issueFixer.get().getMember());
+                    new IssueDetailsResponse(issue.get(), issueAssignee.get().getMember().getId(), issueFixer.get().getMember().getId());
             return ResponseEntity.status(HttpStatus.OK).body(response);
         } else {
             // Handle the case where either the issueAssignee or issueFixer is not present
