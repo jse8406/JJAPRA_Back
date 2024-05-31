@@ -93,16 +93,16 @@ public class IssueController {
         }
         Optional<ProjectMember> pm = projectMemberService.findByProjectAndMember(
                 projectService.findById(issue.get().getProjectId()).get(), loggedInUser.get());
-        System.out.println(pm);
         if (pm.isPresent()) {
             Optional<IssueAssignee> issueAssignee = issueAssigneeService.findByIssueId(issueId);
             Optional<IssueFixer> issueFixer = issueFixerService.findByIssueId(issueId);
-            if(issueAssignee.isEmpty() || issueFixer.isEmpty()) {
-                IssueDetailsResponse response = new IssueDetailsResponse(issue.get());
-                return ResponseEntity.status(HttpStatus.OK).body(response);
+            IssueDetailsResponse response = new IssueDetailsResponse(issue.get());
+            if(issueAssignee.isPresent()) {
+                response.setAssignee(issueAssignee.get().getMember());
             }
-            IssueDetailsResponse response =
-                    new IssueDetailsResponse(issue.get(), issueAssignee.get().getMember(), issueFixer.get().getMember());
+            if (issueFixer.isPresent()) {
+                response.setFixer(issueFixer.get().getMember());
+            }
             return ResponseEntity.status(HttpStatus.OK).body(response);
         } else {
             // Handle the case where either the issueAssignee or issueFixer is not present
@@ -135,7 +135,7 @@ public class IssueController {
     }
 
     @GetMapping("/projects/{projectId}/issues")
-    public ResponseEntity<List<Issue>> getIssuesByProjectId(@PathVariable("projectId") Integer projectId,
+    public ResponseEntity<List<IssueDetailsResponse>> getIssuesByProjectId(@PathVariable("projectId") Integer projectId,
                                             @RequestHeader("Authorization") String token) {
         Optional<Member> loggedInUser = jwtMember.getMember(token);
         if (loggedInUser.isEmpty()) {
@@ -144,7 +144,22 @@ public class IssueController {
 
         if (projectMemberService.findByProjectAndMember(
                 projectService.findById(projectId).get(), loggedInUser.get()).isPresent()) {
-            return ResponseEntity.ok(issueService.findByProjectId(projectId));
+            List<Issue> issueList = issueService.findByProjectId(projectId);
+            List<IssueDetailsResponse> responseList = issueList.stream()
+                    .map(issue -> {
+                        Optional<IssueAssignee> issueAssignee = issueAssigneeService.findByIssueId(issue.getIssueId());
+                        Optional<IssueFixer> issueFixer = issueFixerService.findByIssueId(issue.getIssueId());
+                        IssueDetailsResponse response = new IssueDetailsResponse(issue);
+                        if(issueAssignee.isPresent()) {
+                            response.setAssignee(issueAssignee.get().getMember());
+                        }
+                        if (issueFixer.isPresent()) {
+                            response.setFixer(issueFixer.get().getMember());
+                        }
+                        return new IssueDetailsResponse(issue, issueAssignee.get().getMember(), issueFixer.get().getMember());
+                    })
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(responseList);
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
     }

@@ -7,12 +7,14 @@ import jjapra.app.model.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 public class IssueDetailsResponse {
     private Issue issue;
     private Member fixer;
