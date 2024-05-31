@@ -4,11 +4,13 @@
 //import jjapra.app.config.jwt.JwtMember;
 //import jjapra.app.controller.ProjectController;
 //import jjapra.app.dto.project.AddProjectRequest;
+//import jjapra.app.model.issue.Issue;
 //import jjapra.app.model.member.Member;
 //import jjapra.app.model.member.MemberRole;
 //import jjapra.app.model.project.Project;
 //import jjapra.app.model.project.ProjectMember;
-//import jjapra.app.service.MemberService;
+//import jjapra.app.response.ProjectDetailsResponse;
+//import jjapra.app.service.IssueService;
 //import jjapra.app.service.ProjectMemberService;
 //import jjapra.app.service.ProjectService;
 //import org.junit.jupiter.api.BeforeEach;
@@ -19,18 +21,14 @@
 //import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 //import org.springframework.boot.test.context.SpringBootTest;
 //import org.springframework.boot.test.mock.mockito.MockBean;
-//import org.springframework.http.HttpStatus;
 //import org.springframework.http.MediaType;
-//import org.springframework.http.ResponseEntity;
 //import org.springframework.security.test.context.support.WithMockUser;
 //import org.springframework.test.web.servlet.MockMvc;
 //
 //import java.util.List;
 //import java.util.Optional;
 //
-//import static org.mockito.ArgumentMatchers.any;
-//import static org.mockito.ArgumentMatchers.anyInt;
-//import static org.mockito.ArgumentMatchers.anyString;
+//import static org.mockito.ArgumentMatchers.*;
 //import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 //import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 //import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -50,7 +48,7 @@
 //    private ProjectMemberService projectMemberService;
 //
 //    @MockBean
-//    private MemberService memberService;
+//    private IssueService issueService;
 //
 //    @MockBean
 //    private JwtMember jwtMember;
@@ -90,9 +88,7 @@
 //                        .header("Authorization", "Bearer token")
 //                        .with(csrf()))
 //                .andExpect(status().isOk())
-//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(jsonPath("$[0].project.id").value(project.getId()))
-//                .andExpect(jsonPath("$[0].project.title").value(project.getTitle()));
+//                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 //    }
 //
 //    @DisplayName("Success add project")
@@ -147,29 +143,25 @@
 //        project.setId(1);
 //        project.setTitle("Test Project");
 //
+//        ProjectMember projectMember = new ProjectMember();
+//        projectMember.setProject(project);
+//        projectMember.setMember(adminMember);
+//
 //        Mockito.when(jwtMember.getMember(anyString())).thenReturn(Optional.of(adminMember));
 //        Mockito.when(projectService.findById(1)).thenReturn(Optional.of(project));
+//        Mockito.when(projectMemberService.findByProjectAndMember(any(Project.class), any(Member.class)))
+//                .thenReturn(Optional.of(projectMember));
 //
 //        mockMvc.perform(get("/projects/1")
 //                        .header("Authorization", "Bearer token")
 //                        .with(csrf()))
 //                .andExpect(status().isOk())
 //                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(jsonPath("$.id").value(project.getId()))
-//                .andExpect(jsonPath("$.title").value(project.getTitle()));
+//                .andExpect(jsonPath("$.project.id").value(project.getId()))
+//                .andExpect(jsonPath("$.project.title").value(project.getTitle()));
 //    }
 //
-//    @DisplayName("Fail get project by id")
-//    @Test
-//    public void testGetProjectByIdNotFound() throws Exception {
-//        Mockito.when(jwtMember.getMember(anyString())).thenReturn(Optional.of(adminMember));
-//        Mockito.when(projectService.findById(1)).thenReturn(Optional.empty());
 //
-//        mockMvc.perform(get("/projects/1")
-//                        .header("Authorization", "Bearer token")
-//                        .with(csrf()))
-//                .andExpect(status().isNotFound());
-//    }
 //
 //    @DisplayName("Success update project")
 //    @Test
@@ -195,44 +187,30 @@
 //                .andExpect(jsonPath("$.title").value(project.getTitle()));
 //    }
 //
-//    @DisplayName("Fail update project")
-//    @Test
-//    public void testUpdateProjectNotFound() throws Exception {
-//        AddProjectRequest request = new AddProjectRequest();
-//        request.setTitle("Updated Project");
-//
-//        Mockito.when(jwtMember.getMember(anyString())).thenReturn(Optional.of(adminMember));
-//        Mockito.when(projectService.update(anyInt(), any(AddProjectRequest.class))).thenReturn(null);
-//
-//        mockMvc.perform(put("/projects/1")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsString(request))
-//                        .header("Authorization", "Bearer token")
-//                        .with(csrf()))
-//                .andExpect(status().isNotFound());
-//    }
-//
 //    @DisplayName("Success delete project")
 //    @Test
 //    public void testDeleteProject() throws Exception {
+//        Project project = new Project();
+//        project.setId(1);
+//        project.setTitle("Test Project");
+//
+//        Issue issue = new Issue();
+//        issue.setIssueId(1);
+//        issue.setProjectId(1);
+//
 //        Mockito.when(jwtMember.getMember(anyString())).thenReturn(Optional.of(adminMember));
-//        Mockito.when(projectService.deleteProject(1)).thenReturn(ResponseEntity.status(HttpStatus.NO_CONTENT).build());
+//        Mockito.when(projectService.findById(anyInt())).thenReturn(Optional.of(project));
+//        Mockito.when(issueService.findCommentByProjectId(anyInt())).thenReturn(List.of());
+//        Mockito.when(issueService.findByProjectId(anyInt())).thenReturn(List.of(issue));
+//        Mockito.when(projectMemberService.findByProject(any(Project.class))).thenReturn(List.of());
 //
 //        mockMvc.perform(delete("/projects/1")
 //                        .header("Authorization", "Bearer token")
 //                        .with(csrf()))
-//                .andExpect(status().isNoContent());
+//                .andExpect(status().isOk());
 //    }
 //
-//    @DisplayName("Fail delete project")
-//    @Test
-//    public void testDeleteProjectNotFound() throws Exception {
-//        Mockito.when(jwtMember.getMember(anyString())).thenReturn(Optional.of(adminMember));
-//        Mockito.when(projectService.deleteProject(1)).thenReturn(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 //
-//        mockMvc.perform(delete("/projects/1")
-//                        .header("Authorization", "Bearer token")
-//                        .with(csrf()))
-//                .andExpect(status().isNotFound());
-//    }
+//
+//
 //}

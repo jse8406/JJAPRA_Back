@@ -6,7 +6,6 @@
 //import jjapra.app.dto.issue.AddIssueMemberRequest;
 //import jjapra.app.model.issue.Issue;
 //import jjapra.app.model.issueMember.IssueAssignee;
-//import jjapra.app.model.issueMember.IssueFixer;
 //import jjapra.app.model.member.Member;
 //import jjapra.app.model.member.MemberRole;
 //import jjapra.app.model.member.Role;
@@ -42,8 +41,6 @@
 //    @Autowired
 //    private MockMvc mockMvc;
 //
-//    @MockBean
-//    private IssueFixerService issueFixerService;
 //
 //    @MockBean
 //    private IssueAssigneeService issueAssigneeService;
@@ -107,8 +104,6 @@
 //        Mockito.when(projectMemberService.findByProjectAndMember(any(Project.class), any(Member.class)))
 //                .thenReturn(Optional.of(projectMember));
 //        Mockito.when(memberService.findById(anyString())).thenReturn(Optional.of(member));
-//        Mockito.when(issueFixerService.save(any(IssueFixer.class)))
-//                .thenReturn(IssueFixer.builder().id(1L).issue(issue).member(member).build());
 //
 //        mockMvc.perform(post("/issues/1/members")
 //                        .contentType(MediaType.APPLICATION_JSON)

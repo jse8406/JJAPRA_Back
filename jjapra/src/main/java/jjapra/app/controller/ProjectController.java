@@ -5,7 +5,6 @@ import jjapra.app.dto.project.AddProjectMemberRequest;
 import jjapra.app.dto.project.AddProjectRequest;
 import jjapra.app.model.issue.Issue;
 import jjapra.app.model.member.Member;
-import jjapra.app.model.member.MemberRole;
 import jjapra.app.model.member.Role;
 import jjapra.app.model.project.Project;
 import jjapra.app.model.project.ProjectMember;
@@ -17,7 +16,6 @@ import jjapra.app.service.MemberService;
 import jjapra.app.service.ProjectMemberService;
 import jjapra.app.service.ProjectService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +32,6 @@ public class ProjectController {
     private final ProjectService projectService;
     private final JwtMember jwtMember;
     private final ProjectMemberService projectMemberService;
-    private final MemberService memberService;
     private final IssueService issueService;
 
     @GetMapping("")
