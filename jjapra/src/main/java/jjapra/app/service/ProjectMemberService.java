@@ -38,4 +38,8 @@ public class ProjectMemberService {
     public void delete(ProjectMember projectMember) {
         projectMemberRepository.delete(projectMember);
     }
+
+    public Optional<ProjectMember> findByProjectAndRole(Project project, Role pl) {
+        return projectMemberRepository.findByProjectAndRole(project, pl);
+    }
 }

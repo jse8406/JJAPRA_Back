@@ -3,6 +3,7 @@ package jjapra.app.controller;
 import jjapra.app.config.jwt.JwtMember;
 import jjapra.app.dto.project.AddProjectMemberRequest;
 import jjapra.app.model.member.Member;
+import jjapra.app.model.member.Role;
 import jjapra.app.model.project.Project;
 import jjapra.app.model.project.ProjectMember;
 import jjapra.app.service.MemberService;
@@ -44,6 +45,11 @@ public class ProjectMemberController {
 
         Optional<ProjectMember> pm = projectMemberService.findByProjectAndMember(project.get(), member.get());
         pm.ifPresent(projectMemberService::delete);
+
+        if (request.getRole().equals("PL")) {
+            Optional<ProjectMember> pl = projectMemberService.findByProjectAndRole(project.get(), Role.valueOf("PL"));
+            pl.ifPresent(projectMemberService::delete);
+        }
 
         ProjectMember entity = AddProjectMemberRequest.toEntity(project.get(), member.get(), request.getRole());
         ProjectMember projectMember = projectMemberService.save(entity);
