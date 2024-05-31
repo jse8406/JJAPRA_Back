@@ -1,6 +1,7 @@
 package jjapra.app.model.issue;
 
 import jakarta.persistence.*;
+import jjapra.app.model.member.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -61,4 +62,7 @@ public class Issue {
         this.status = status != null ? status : Status.NEW;
     }
 
+    public void setAssignee(Member member) {
+        
+    }
 }
