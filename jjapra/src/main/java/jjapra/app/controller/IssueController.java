@@ -98,10 +98,10 @@ public class IssueController {
             Optional<IssueFixer> issueFixer = issueFixerService.findByIssueId(issueId);
             IssueDetailsResponse response = new IssueDetailsResponse(issue.get());
             if(issueAssignee.isPresent()) {
-                response.setAssignee(issueAssignee.get().getMember());
+                response.setAssignee(issueAssignee.get().getMember().getId());
             }
             if (issueFixer.isPresent()) {
-                response.setFixer(issueFixer.get().getMember());
+                response.setFixer(issueFixer.get().getMember().getId());
             }
             return ResponseEntity.status(HttpStatus.OK).body(response);
         } else {
@@ -151,12 +151,13 @@ public class IssueController {
                         Optional<IssueFixer> issueFixer = issueFixerService.findByIssueId(issue.getIssueId());
                         IssueDetailsResponse response = new IssueDetailsResponse(issue);
                         if(issueAssignee.isPresent()) {
-                            response.setAssignee(issueAssignee.get().getMember());
+                            response.setAssignee(issueAssignee.get().getMember().getId());
                         }
                         if (issueFixer.isPresent()) {
-                            response.setFixer(issueFixer.get().getMember());
+                            response.setFixer(issueFixer.get().getMember().getId());
                         }
-                        return new IssueDetailsResponse(issue, issueAssignee.get().getMember(), issueFixer.get().getMember());
+                        return new IssueDetailsResponse(issue, issueAssignee.get().getMember().getId(),
+                                issueFixer.get().getMember().getId());
                     })
                     .collect(Collectors.toList());
             return ResponseEntity.ok(responseList);
