@@ -156,8 +156,7 @@ public class IssueController {
                         if (issueFixer.isPresent()) {
                             response.setFixer(issueFixer.get().getMember().getId());
                         }
-                        return new IssueDetailsResponse(issue, issueAssignee.get().getMember().getId(),
-                                issueFixer.get().getMember().getId());
+                        return response;
                     })
                     .collect(Collectors.toList());
             return ResponseEntity.ok(responseList);
