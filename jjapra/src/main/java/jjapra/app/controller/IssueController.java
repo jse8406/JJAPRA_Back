@@ -99,7 +99,7 @@ public class IssueController {
             Optional<IssueFixer> issueFixer = issueFixerService.findByIssueId(issueId);
             if(issueAssignee.isEmpty() || issueFixer.isEmpty()) {
                 IssueDetailsResponse response = new IssueDetailsResponse(issue.get());
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+                return ResponseEntity.status(HttpStatus.OK).body(response);
             }
             IssueDetailsResponse response =
                     new IssueDetailsResponse(issue.get(), issueAssignee.get().getMember(), issueFixer.get().getMember());
