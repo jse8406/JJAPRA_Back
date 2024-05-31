@@ -37,28 +37,28 @@ public class DataInitializer implements ApplicationRunner {
                 .build();
 
         Member member2 = Member.builder()
-                .id("test1")
-                .password("test1")
-                .name("test1")
-                .email("test1@naver.com")
+                .id("tester")
+                .password("tester")
+                .name("tester")
+                .email("tester@naver.com")
                 .phone_num("01011112222")
                 .role(MemberRole.USER)
                 .build();
 
         Member member3 = Member.builder()
-                .id("test2")
-                .password("test2")
-                .name("test2")
-                .email("test2@naver.com")
+                .id("pl")
+                .password("pl")
+                .name("pl")
+                .email("pl@naver.com")
                 .phone_num("01011112222")
                 .role(MemberRole.USER)
                 .build();
 
         Member member4 = Member.builder()
-                .id("test3")
-                .password("test3")
-                .name("test3")
-                .email("test3@naver.com")
+                .id("dev")
+                .password("dev")
+                .name("dev")
+                .email("dev@naver.com")
                 .phone_num("01011112222")
                 .role(MemberRole.USER)
                 .build();
@@ -132,12 +132,24 @@ public class DataInitializer implements ApplicationRunner {
         ProjectMember projectMember6 = ProjectMember.builder()
                 .project(project1)
                 .member(member2)
-                .role(Role.PL)
+                .role(Role.TESTER)
                 .build();
 
         ProjectMember projectMember7 = ProjectMember.builder()
                 .project(project2)
                 .member(member2)
+                .role(Role.TESTER)
+                .build();
+
+        ProjectMember projectMember8 = ProjectMember.builder()
+                .project(project1)
+                .member(member3)
+                .role(Role.PL)
+                .build();
+
+        ProjectMember projectMember9 = ProjectMember.builder()
+                .project(project1)
+                .member(member4)
                 .role(Role.DEV)
                 .build();
 
@@ -148,6 +160,8 @@ public class DataInitializer implements ApplicationRunner {
         projectMemberRepository.save(projectMember5);
         projectMemberRepository.save(projectMember6);
         projectMemberRepository.save(projectMember7);
+        projectMemberRepository.save(projectMember8);
+        projectMemberRepository.save(projectMember9);
 
         Issue issue1 = Issue.builder()
                 .projectId(project1.getId())

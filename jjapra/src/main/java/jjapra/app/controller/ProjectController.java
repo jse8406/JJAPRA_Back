@@ -143,7 +143,7 @@ public class ProjectController {
             issueService.findByProjectId(id).forEach(issueService::deleteIssue);
             projectMemberService.findByProject(projectService.findById(id).get()).forEach(projectMemberService::delete);
             projectService.deleteProject(id);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+            return ResponseEntity.status(HttpStatus.OK).body(null);
         }
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
