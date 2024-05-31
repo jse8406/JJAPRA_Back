@@ -35,7 +35,7 @@ public class IssueController {
     private final IssueAssigneeService issueAssigneeService;
     private final IssueFixerService issueFixerService;
 
-    @PostMapping("projects/{projectId}/issues")
+    @PostMapping("/projects/{projectId}/issues")
     public ResponseEntity<Issue> addIssue(@RequestBody AddIssueRequest request, @PathVariable("projectId") Integer projectId,
                                           @RequestHeader("Authorization") String token) {
         Optional<Member> loggedInUser = jwtMember.getMember(token);
