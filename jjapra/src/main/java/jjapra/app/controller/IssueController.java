@@ -7,7 +7,6 @@ import jjapra.app.dto.issue.UpdateIssueRequest;
 import jjapra.app.model.issue.Comment;
 import jjapra.app.model.issue.Issue;
 import jjapra.app.model.issueMember.IssueAssignee;
-import jjapra.app.model.issueMember.IssueFixer;
 import jjapra.app.model.member.Member;
 import jjapra.app.model.project.Project;
 import jjapra.app.model.project.ProjectMember;
@@ -33,7 +32,6 @@ public class IssueController {
     private final ProjectService projectService;
     private final JwtMember jwtMember;
     private final IssueAssigneeService issueAssigneeService;
-    private final IssueFixerService issueFixerService;
 
     @PostMapping("/projects/{projectId}/issues")
     public ResponseEntity<Issue> addIssue(@RequestBody AddIssueRequest request, @PathVariable("projectId") Integer projectId,
@@ -95,13 +93,9 @@ public class IssueController {
                 projectService.findById(issue.get().getProjectId()).get(), loggedInUser.get());
         if (pm.isPresent()) {
             Optional<IssueAssignee> issueAssignee = issueAssigneeService.findByIssueId(issueId);
-            Optional<IssueFixer> issueFixer = issueFixerService.findByIssueId(issueId);
             IssueDetailsResponse response = new IssueDetailsResponse(issue.get());
             if(issueAssignee.isPresent()) {
                 response.setAssignee(issueAssignee.get().getMember().getId());
-            }
-            if (issueFixer.isPresent()) {
-                response.setFixer(issueFixer.get().getMember().getId());
             }
             return ResponseEntity.status(HttpStatus.OK).body(response);
         } else {
@@ -148,13 +142,9 @@ public class IssueController {
             List<IssueDetailsResponse> responseList = issueList.stream()
                     .map(issue -> {
                         Optional<IssueAssignee> issueAssignee = issueAssigneeService.findByIssueId(issue.getIssueId());
-                        Optional<IssueFixer> issueFixer = issueFixerService.findByIssueId(issue.getIssueId());
                         IssueDetailsResponse response = new IssueDetailsResponse(issue);
                         if(issueAssignee.isPresent()) {
                             response.setAssignee(issueAssignee.get().getMember().getId());
-                        }
-                        if (issueFixer.isPresent()) {
-                            response.setFixer(issueFixer.get().getMember().getId());
                         }
                         return response;
                     })

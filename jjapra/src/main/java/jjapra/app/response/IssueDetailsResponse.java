@@ -1,9 +1,6 @@
 package jjapra.app.response;
 
-import jjapra.app.model.issue.Comment;
 import jjapra.app.model.issue.Issue;
-import jjapra.app.model.issueMember.IssueFixer;
-import jjapra.app.model.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +14,6 @@ import java.util.List;
 @Setter
 public class IssueDetailsResponse {
     private Issue issue;
-    private String fixer;
     private String assignee;
 
     public IssueDetailsResponse(Issue issue) {
