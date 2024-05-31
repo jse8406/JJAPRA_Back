@@ -37,27 +37,27 @@ public class DataInitializer implements ApplicationRunner {
                 .build();
 
         Member member2 = Member.builder()
-                .id("tester")
-                .password("tester")
-                .name("tester")
+                .id("user1")
+                .password("user1")
+                .name("user1")
                 .email("tester@naver.com")
                 .phone_num("01011112222")
                 .role(MemberRole.USER)
                 .build();
 
         Member member3 = Member.builder()
-                .id("pl")
-                .password("pl")
-                .name("pl")
+                .id("user2")
+                .password("user2")
+                .name("user2")
                 .email("pl@naver.com")
                 .phone_num("01011112222")
                 .role(MemberRole.USER)
                 .build();
 
         Member member4 = Member.builder()
-                .id("dev")
-                .password("dev")
-                .name("dev")
+                .id("user3")
+                .password("user3")
+                .name("user3")
                 .email("dev@naver.com")
                 .phone_num("01011112222")
                 .role(MemberRole.USER)
