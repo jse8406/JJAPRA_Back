@@ -1,4 +1,4 @@
-package jjapra.app.response;
+package jjapra.app.responsedto;
 
 import jjapra.app.model.member.Role;
 import jjapra.app.model.project.Project;

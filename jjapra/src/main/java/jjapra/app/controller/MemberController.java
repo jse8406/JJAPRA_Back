@@ -3,17 +3,15 @@ package jjapra.app.controller;
 import jjapra.app.config.jwt.JwtMember;
 import jjapra.app.config.jwt.JwtProvider;
 import jjapra.app.dto.member.AddMemberRequest;
+import jjapra.app.dto.member.LoginRequest;
 import jjapra.app.model.member.Member;
+import jjapra.app.responsedto.LoginResponse;
 import jjapra.app.service.MemberService;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -79,19 +77,4 @@ public class MemberController {
 
         return ResponseEntity.status(HttpStatus.OK).body(member.get());
     }
-}
-
-@Getter
-@Setter
-@EnableWebMvc
-class LoginRequest {
-    private String id;
-    private String password;
-}
-
-@Getter
-@RequiredArgsConstructor
-class LoginResponse {
-    private final String token;
-    private final Member member;
 }

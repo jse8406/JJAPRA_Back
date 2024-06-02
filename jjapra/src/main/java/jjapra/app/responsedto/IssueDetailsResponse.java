@@ -1,12 +1,10 @@
-package jjapra.app.response;
+package jjapra.app.responsedto;
 
 import jjapra.app.model.issue.Issue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor

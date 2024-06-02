@@ -1,4 +1,4 @@
-package jjapra.app.response;
+package jjapra.app.responsedto;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,10 +1,9 @@
-package jjapra.app.response;
+package jjapra.app.responsedto;
 
 import jjapra.app.model.issue.Issue;
 import jjapra.app.model.project.Project;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;

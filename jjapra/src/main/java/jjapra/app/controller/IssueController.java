@@ -10,7 +10,7 @@ import jjapra.app.model.issueMember.IssueAssignee;
 import jjapra.app.model.member.Member;
 import jjapra.app.model.project.Project;
 import jjapra.app.model.project.ProjectMember;
-import jjapra.app.response.IssueDetailsResponse;
+import jjapra.app.responsedto.IssueDetailsResponse;
 import jjapra.app.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
