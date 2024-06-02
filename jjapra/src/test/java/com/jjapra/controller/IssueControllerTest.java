@@ -12,7 +12,6 @@
 //import jjapra.app.model.member.MemberRole;
 //import jjapra.app.model.project.Project;
 //import jjapra.app.model.project.ProjectMember;
-//import jjapra.app.response.IssueDetailsResponse;
 //import jjapra.app.service.IssueAssigneeService;
 //import jjapra.app.service.IssueService;
 //import jjapra.app.service.ProjectMemberService;
