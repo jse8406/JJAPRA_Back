@@ -201,6 +201,7 @@ public class IssueController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 
+        issueAssigneeService.findByIssueId(issueId).ifPresent(issueAssigneeService::delete);
         issueService.deleteIssue(issueId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
